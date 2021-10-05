@@ -1,10 +1,10 @@
 import html
 
-from Hackfreaks import (LOGGER, DRAGONS, TIGERS, WOLVES, dispatcher)
-from Hackfreaks.modules.helper_funcs.chat_status import (user_admin,
+from GreysonBot import (LOGGER, DRAGONS, TIGERS, WOLVES, dispatcher)
+from GreysonBot.modules.helper_funcs.chat_status import (user_admin,
                                                            user_not_admin)
-from Hackfreaks.modules.log_channel import loggable
-from Hackfreaks.modules.sql import reporting_sql as sql
+from GreysonBot.modules.log_channel import loggable
+from GreysonBot.modules.sql import reporting_sql as sql
 from telegram import (Chat, InlineKeyboardButton, InlineKeyboardMarkup,
                       ParseMode, Update)
 from telegram.error import BadRequest, Unauthorized
