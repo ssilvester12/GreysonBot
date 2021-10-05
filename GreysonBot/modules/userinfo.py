@@ -15,18 +15,18 @@ from telegram.ext.dispatcher import run_async
 from telegram.error import BadRequest
 from telegram.utils.helpers import escape_markdown, mention_html
 
-from Hackfreaks import (DEV_USERS, OWNER_ID, DRAGONS, DEMONS, TIGERS, WOLVES,
+from GreysonBot import (DEV_USERS, OWNER_ID, DRAGONS, DEMONS, TIGERS, WOLVES,
                           INFOPIC, dispatcher, sw)
-from Hackfreaks.__main__ import STATS, TOKEN, USER_INFO
-from Hackfreaks.modules.sql import SESSION
-import Hackfreaks.modules.sql.userinfo_sql as sql
-from Hackfreaks.modules.disable import DisableAbleCommandHandler
-from Hackfreaks.modules.sql.global_bans_sql import is_user_gbanned
-from Hackfreaks.modules.sql.afk_sql import is_afk, check_afk_status
-from Hackfreaks.modules.sql.users_sql import get_user_num_chats
-from Hackfreaks.modules.helper_funcs.chat_status import sudo_plus
-from Hackfreaks.modules.helper_funcs.extraction import extract_user
-from Hackfreaks import telethn as HackfreaksTelethonClient, TIGERS, DRAGONS, DEMONS
+from GreysonBot.__main__ import STATS, TOKEN, USER_INFO
+from GreysonBot.modules.sql import SESSION
+import GreysonBot.modules.sql.userinfo_sql as sql
+from GreysonBot.modules.disable import DisableAbleCommandHandler
+from GreysonBot.modules.sql.global_bans_sql import is_user_gbanned
+from GreysonBot.modules.sql.afk_sql import is_afk, check_afk_status
+from GreysonBot.modules.sql.users_sql import get_user_num_chats
+from GreysonBot.modules.helper_funcs.chat_status import sudo_plus
+from GreysonBot.modules.helper_funcs.extraction import extract_user
+from GreysonBot import telethn as GreysonBotTelethonClient, TIGERS, DRAGONS, DEMONS
 from telegram import __version__
 from pyrogram import __version__ as pyrover
 from psutil import cpu_percent, virtual_memory, disk_usage, boot_time
@@ -386,21 +386,21 @@ def stats(update, context):
     try:
         update.effective_message.reply_text(
 
-            f"*I am Hackfreaks*\n" +
-            "*Maintained by* [🇮🇳 スウォニット](t.me/MaskedVirus)\n" + status +
+            f"*I am Greyson*\n" +
+            "*Maintained by* [✘ 𝗞𝘂𝗻𝗮𝗹 ✘](t.me/Kunaldiwan)\n" + status +
             "\n*>-------< Statistics >-------<*\n"
             + "\n".join([mod.__stats__() for mod in STATS]) +
-            "\n\n*Source:* [GitHub](https://github.com/swatv3nub/Hackfreaks)",
+            "\n\n*Source:* [GitHub](https://github.com/Kunal-Diwan/GreysonBot)",
         parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
     except BaseException:
         update.effective_message.reply_text(
 
-            f"*I am Hackfreaks*\n" +
-            "*Maintained by* [🇮🇳 スウォニット](t.me/MaskedVirus)\n" +
+            f"*I am Greyson*\n" +
+            "*Maintained by* [✘ 𝗞𝘂𝗻𝗮𝗹 ✘](t.me/Kunaldiwan)\n" +
             "*Library used:* python-telegram-bot\n" +
             "\n*>-------< Statistics >-------<:*\n"
             + "\n".join([mod.__stats__() for mod in STATS]) +
-            "\n\n*Source:* [GitHub](https://github.com/swatv3nub/Hackfreaks)",
+            "\n\n*Source:* [GitHub](https://github.com/Kunal-Diwan/GreysonBot)",
         parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
 
