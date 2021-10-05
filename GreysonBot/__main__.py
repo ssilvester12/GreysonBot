@@ -448,8 +448,10 @@ def Greyson_tut_callback(update, context):
             ),
         )
     elif query.data == "tutmanu_home":
-        update.effective_message.reply_text(
-            GREYSON_HOME_TEXT,
+        query.message.edit_text(
+            text=f"* Excellent!* \nNow the Bot is ready to use!\n\nUse /help to Know all modules and features "
+            f"\n`All commands can be used with / ? or !`"
+            f"",
             parse_mode=ParseMode.MARKDOWN,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
