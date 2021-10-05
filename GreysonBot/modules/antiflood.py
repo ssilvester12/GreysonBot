@@ -3,23 +3,23 @@ from typing import Optional, List
 
 from telegram import Message, Chat, Update, Bot, User, InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, ChatPermissions
 
-from Hackfreaks import TIGERS, WOLVES, dispatcher
-from Hackfreaks.modules.helper_funcs.chat_status import (
+from GreysonBot import TIGERS, WOLVES, dispatcher
+from GreysonBot.modules.helper_funcs.chat_status import (
     bot_admin, can_restrict, connection_status, is_user_admin, user_admin,
     user_admin_no_reply)
-from Hackfreaks.modules.log_channel import loggable
-from Hackfreaks.modules.sql import antiflood_sql as sql
+from GreysonBot.modules.log_channel import loggable
+from GreysonBot.modules.sql import antiflood_sql as sql
 from telegram.error import BadRequest
 from telegram.ext import CallbackContext, CallbackQueryHandler, CommandHandler, Filters, MessageHandler, run_async
 from telegram.utils.helpers import mention_html, escape_markdown
-from Hackfreaks import dispatcher
-from Hackfreaks.modules.helper_funcs.chat_status import is_user_admin, user_admin, can_restrict
-from Hackfreaks.modules.helper_funcs.string_handling import extract_time
-from Hackfreaks.modules.log_channel import loggable
-from Hackfreaks.modules.sql import antiflood_sql as sql
-from Hackfreaks.modules.connection import connected
-from Hackfreaks.modules.helper_funcs.alternate import send_message
-from Hackfreaks.modules.sql.approve_sql import is_approved
+from GreysonBot import dispatcher
+from GreysonBot.modules.helper_funcs.chat_status import is_user_admin, user_admin, can_restrict
+from GreysonBot.modules.helper_funcs.string_handling import extract_time
+from GreysonBot.modules.log_channel import loggable
+from GreysonBot.modules.sql import antiflood_sql as sql
+from GreysonBot.modules.connection import connected
+from GreysonBot.modules.helper_funcs.alternate import send_message
+from GreysonBot.modules.sql.approve_sql import is_approved
 FLOOD_GROUP = 3
 
 
