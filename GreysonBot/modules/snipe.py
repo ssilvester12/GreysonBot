@@ -7,10 +7,10 @@ from telegram.ext import Filters, CommandHandler
 from telegram.ext.dispatcher import run_async, CallbackContext
 
 import random
-import Hackfreaks.modules.sql.users_sql as sql
-from Hackfreaks.modules.helper_funcs.filters import CustomFilters
-from Hackfreaks import dispatcher, OWNER_ID, LOGGER
-from Hackfreaks.modules.disable import DisableAbleCommandHandler
+import GreysonBot.modules.sql.users_sql as sql
+from GreysonBot.modules.helper_funcs.filters import CustomFilters
+from GreysonBot import dispatcher, OWNER_ID, LOGGER
+from GreysonBot.modules.disable import DisableAbleCommandHandler
 USERS_GROUP = 4
 
 
