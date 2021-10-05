@@ -1,9 +1,9 @@
 from time import sleep
 
-import Hackfreaks.modules.sql.global_bans_sql as gban_sql
-import Hackfreaks.modules.sql.users_sql as user_sql
-from Hackfreaks import DEV_USERS, OWNER_ID, dispatcher
-from Hackfreaks.modules.helper_funcs.chat_status import dev_plus
+import GreysonBot.modules.sql.global_bans_sql as gban_sql
+import GreysonBot.modules.sql.users_sql as user_sql
+from GreysonBot import DEV_USERS, OWNER_ID, dispatcher
+from GreysonBot.modules.helper_funcs.chat_status import dev_plus
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.error import BadRequest, Unauthorized
 from telegram.ext import (CallbackContext, CallbackQueryHandler, CommandHandler,
