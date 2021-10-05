@@ -1,10 +1,9 @@
-# Create a new config.py or rename this to config.py file in same dir and import, then extend this class.
 import json
 import os
 
 
 def get_user_list(config, key):
-    with open('{}/Hackfreaks/{}'.format(os.getcwd(), config),
+    with open('{}/GreysonBot/{}'.format(os.getcwd(), config),
               'r') as json_file:
         return json.load(json_file)[key]
 
@@ -18,11 +17,11 @@ class Config(object):
     API_ID = 123456  # integer value, dont use ""
     API_HASH = "awoo"
     TOKEN = "BOT_TOKEN"  #This var used to be API_KEY but it is now TOKEN, adjust accordingly.
-    OWNER_ID = 792109647  # If you dont know, run the bot and do /id in your private chat with it, also an integer
-    OWNER_USERNAME = "Sawada"
-    SUPPORT_CHAT = 'OnePunchSupport'  #Your own group for support, do not add the @
-    JOIN_LOGGER = -1001253661229  #Prints any new group the bot is added to, prints just the name and ID.
-    EVENT_LOGS = -1001190806654  #Prints information like gbans, sudo promotes, AI enabled disable states that may help in debugging and shit
+    OWNER_ID = 1701601729  # If you dont know, run the bot and do /id in your private chat with it, also an integer
+    OWNER_USERNAME = "Kunaldiwan"
+    SUPPORT_CHAT = 'GreysonChats'  #Your own group for support, do not add the @
+    JOIN_LOGGER = -1001481006413  #Prints any new group the bot is added to, prints just the name and ID.
+    EVENT_LOGS = -1001481006413  #Prints information like gbans, sudo promotes, AI enabled disable states that may help in debugging and shit
 
     #RECOMMENDED
     SQLALCHEMY_DATABASE_URI = 'something://somewhat:user@hosturl:port/databasename'  # needed for any database modules
@@ -50,7 +49,7 @@ class Config(object):
     DEL_CMDS = True  #Delete commands that users dont have access to, like delete /ban if a non admin uses it.
     STRICT_GBAN = True
     WORKERS = 8  # Number of subthreads to use. Set as number of threads your processor uses
-    BAN_STICKER = ''  # banhammer marie sticker id, the bot will send this sticker before banning or kicking a user in chat.
+    BAN_STICKER = ''  # GreysonBot sticker id, the bot will send this sticker before banning or kicking a user in chat.
     ALLOW_EXCL = True  # Allow ! commands as well as / (Leave this to true so that blacklist can work)
     CASH_API_KEY = 'awoo'  # Get your API key from https://www.alphavantage.co/support/#api-key
     TIME_API_KEY = 'awoo'  # Get your API key from https://timezonedb.com/api
