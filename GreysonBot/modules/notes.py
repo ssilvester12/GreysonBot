@@ -2,14 +2,14 @@ import re, ast
 from io import BytesIO
 from typing import Optional
 
-import Hackfreaks.modules.sql.notes_sql as sql
-from Hackfreaks import LOGGER, JOIN_LOGGER, SUPPORT_CHAT, dispatcher, DRAGONS
-from Hackfreaks.modules.disable import DisableAbleCommandHandler
-from Hackfreaks.modules.helper_funcs.chat_status import user_admin, connection_status
-from Hackfreaks.modules.helper_funcs.misc import (build_keyboard,
+import GreysonBot.modules.sql.notes_sql as sql
+from GreysonBot import LOGGER, JOIN_LOGGER, SUPPORT_CHAT, dispatcher, DRAGONS
+from GreysonBot.modules.disable import DisableAbleCommandHandler
+from GreysonBot.modules.helper_funcs.chat_status import user_admin, connection_status
+from GreysonBot.modules.helper_funcs.misc import (build_keyboard,
                                                     revert_buttons)
-from Hackfreaks.modules.helper_funcs.msg_types import get_note_type
-from Hackfreaks.modules.helper_funcs.string_handling import escape_invalid_curly_brackets
+from GreysonBot.modules.helper_funcs.msg_types import get_note_type
+from GreysonBot.modules.helper_funcs.string_handling import escape_invalid_curly_brackets
 from telegram import (MAX_MESSAGE_LENGTH, InlineKeyboardMarkup, Message,
                       ParseMode, Update, InlineKeyboardButton)
 from telegram.error import BadRequest
