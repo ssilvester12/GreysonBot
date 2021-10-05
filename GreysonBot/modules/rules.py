@@ -1,9 +1,9 @@
 from typing import Optional
 
-import Hackfreaks.modules.sql.rules_sql as sql
-from Hackfreaks import dispatcher
-from Hackfreaks.modules.helper_funcs.chat_status import user_admin
-from Hackfreaks.modules.helper_funcs.string_handling import markdown_parser
+import GreysonBot.modules.sql.rules_sql as sql
+from GreysonBot import dispatcher
+from GreysonBot.modules.helper_funcs.chat_status import user_admin
+from GreysonBot.modules.helper_funcs.string_handling import markdown_parser
 from telegram import (InlineKeyboardButton, InlineKeyboardMarkup, Message,
                       ParseMode, Update, User)
 from telegram.error import BadRequest
