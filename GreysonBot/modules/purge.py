@@ -1,6 +1,6 @@
-from Hackfreaks.modules.helper_funcs.telethn.chatstatus import (
+from GreysonBot.modules.helper_funcs.telethn.chatstatus import (
     can_delete_messages, user_is_admin)
-from Hackfreaks import telethn
+from GreysonBot import telethn
 import time
 from telethon import events
 
