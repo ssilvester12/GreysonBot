@@ -3,8 +3,8 @@ from tswift import Song
 from telegram import Update, Message, Chat
 from telegram.ext import CallbackContext, run_async
 
-from Hackfreaks import dispatcher
-from Hackfreaks.modules.disable import DisableAbleCommandHandler
+from GreysonBot import dispatcher
+from GreysonBot.modules.disable import DisableAbleCommandHandler
 
 
 @run_async
