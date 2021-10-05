@@ -11,8 +11,8 @@ from telegram import InputMediaPhoto, TelegramError
 from telegram import Update
 from telegram.ext import CallbackContext, run_async
 
-from Hackfreaks import dispatcher
-from Hackfreaks.modules.disable import DisableAbleCommandHandler
+from GreysonBot import dispatcher
+from GreysonBot.modules.disable import DisableAbleCommandHandler
 
 opener = urllib.request.build_opener()
 useragent = 'Mozilla/5.0 (Linux; Android 6.0.1; SM-G920V Build/MMB29K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.98 Mobile Safari/537.36'
@@ -183,7 +183,7 @@ __help__ = f"""
 
 • /reverse: Does a reverse image search of the media which it was replied to.
 
-Reports bugs at @HackfreaksSupport
+Reports bugs at @GreysonChats
 """
 
 __mod_name__ = "Image Search"
