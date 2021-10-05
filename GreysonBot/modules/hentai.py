@@ -1,10 +1,11 @@
+# It is 18+ module you can remove it aftet forking .
 import nekos
-import Hackfreaks.modules.sql.hentai_sql as sql
+import GreysonBot.modules.sql.hentai_sql as sql
 from functools import wraps
 from telegram import ParseMode
-from Hackfreaks.modules.disable import DisableAbleCommandHandler
-from Hackfreaks.modules.helper_funcs.filters import CustomFilters
-from Hackfreaks import dispatcher, EVENT_LOGS
+from GreysonBot.modules.disable import DisableAbleCommandHandler
+from GreysonBot.modules.helper_funcs.filters import CustomFilters
+from GreysonBot import dispatcher, EVENT_LOGS
 from telegram.ext.dispatcher import run_async
 from telegram.ext import CommandHandler
 from telegram.utils.helpers import mention_html
@@ -310,7 +311,7 @@ def kuni(update, context):
 __help__ = """
 ðŸ”ž
 *Hentai Supplier* for your Private Groups, powerd by [É´á´‡á´‹á´s á´€á´˜Éª](https://nekos.life/) I can supply you loads of anime wallpapers and hentai images for free!
-If you want Hentai Supplier in your Private Group, ask [Here](https://t.me/TheHeadHunterZ) or [Here](https://t.me/HackfreaksSupport) for approval of your group.
+If you want Hentai Supplier in your Private Group, ask [Here](https://t.me/GreysonChats) for approval of your group.
 *â€¢ Commands to get photos:*
 - /pussy
 - /feet
