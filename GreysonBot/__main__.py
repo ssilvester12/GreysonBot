@@ -82,31 +82,10 @@ Thank you for your generosity!
 """
 
 #source
-SOURCEG_STRING = """Oh you want my source . I am built in python 3 , Using the python-telegram-bot library, and am fully open source .
-\nDon't forgot to fork 🍴 and star 🌟 the repo . \n\nCheck my source below 👇 \n⚙️ Source ⚙️ - [Click here](https://github.com/Kunal-Diwan/GreysonBot)"""
+SOURCE_STRING = """Oh you want my source . I am built in python 3 , Using the python-telegram-bot library, and am fully open source .
+\nDon't forgot to fork 🍴 and star 🌟 the repo . \n\nCheck my source below 👇"""
 
-buttons = [
-    [
-        InlineKeyboardButton(
-            text="➕️ Add Grayson to chat!  ➕️", url="t.me/MrGreysonBot?startgroup=true"),
-    ],
-    [
-        InlineKeyboardButton(text="📚 Guide 📚", callback_data="guidemenu_"),
-        InlineKeyboardButton(text="⚒️ Support 🛠", callback_data="support_"),
-    ],
-    [
-        InlineKeyboardButton(
-            text="🎥 Configuration Tutorial 🎥", callback_data="tutmanu_"
-        ),
-    ],
-]
-
-gbuttons = [[InlineKeyboardButton(text="⚙️ help ⚙️",
-                                  url="http://t.me/MrGreysonBot?start=help")]]
-
-videobuttons = [[InlineKeyboardButton(text="✅ Done ✅",
-                                  callback_data="tutmanu_home")]]
-
+#help
 HELP_STRINGS = """
 *Help*
 Hey! My name is Greyson . I am a group management bot, here to help you get around and keep the order in your groups!
@@ -119,15 +98,7 @@ I have lots of handy features, such as flood control, a warning system, a note k
 ✪ /donate: Support my owner
 ✪ /source: Gives you my source .
 
-If you have any bugs or questions on how to use me head to @GreysonChats. \n\nAll commands can be used with the following: / !\n\nAnd the following :-"""
-
-GreysonG_IMG = "https://telegra.ph/file/83dbae46536c4f88a28b7.jpg"
-
-Greysontut_VID = "https://telegra.ph/file/f0df0d42c1d2a189d8c61.mp4"
-
-SOURCE_STRING = """Oh you want my source . I am built in python 3 , Using the python-telegram-bot library, and am fully open source .
-\nDon't forgot to fork 🍴 and star 🌟 the repo . \n\nCheck my source below 👇"""
-
+If you have any bugs or questions on how to use me head to @GreysonChats. \n\nAll commands can be used with the following: / !\n\nAnd the following :-""
 IMPORTED = {}
 MIGRATEABLE = []
 HELPABLE = {}
@@ -229,14 +200,30 @@ def start(update: Update, context: CallbackContext):
 
         else:
             update.effective_message.reply_text(
-                PM_START_TEXT,
-                reply_markup=InlineKeyboardMarkup(buttons),
+                PM_START_TEXT.format(escape_markdown(first_name), escape_markdown(context.bot.first_name), OWNER_ID),
                 parse_mode=ParseMode.MARKDOWN,
-                timeout=60,
-            )
+                reply_markup=InlineKeyboardMarkup(                   
+                          [[
+                              InlineKeyboardButton(
+                              text="➕️ Add Greyson to chat ➕️",
+                              url="t.me/MrGreysonBot?startgroup=true")
+                          ],
+                          [
+                              InlineKeyboardButton(
+                              text="📚 Guide 📚",
+                              callback_data="guidemenu_"),
+                              InlineKeyboardButton(
+                              text="⚒️ Support 🛠",
+                              callback_data="support_")
+                          ],
+                          [
+                              InlineKeyboardButton(
+                              text="🎥 Configuration Tutorial 🎥",
+                              callback_data="tutmanu_")                  
+                          ]])) 
     else:
         update.effective_message.reply_photo(
-            GreysonG_IMG,
+            https://telegra.ph/file/83dbae46536c4f88a28b7.jpg,
             G_START_TEXT,
             reply_markup=InlineKeyboardMarkup(gbuttons),
             parse_mode=ParseMode.MARKDOWN,
