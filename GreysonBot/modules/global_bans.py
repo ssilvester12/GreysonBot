@@ -3,9 +3,9 @@ import time
 import requests
 from datetime import datetime
 from io import BytesIO
-from Hackfreaks.modules.sql.users_sql import get_user_com_chats
-import Hackfreaks.modules.sql.global_bans_sql as sql
-from Hackfreaks import (
+from GreysonBot.modules.sql.users_sql import get_user_com_chats
+import GreysonBot.modules.sql.global_bans_sql as sql
+from GreysonBot import (
     DEV_USERS,
     EVENT_LOGS,
     OWNER_ID,
