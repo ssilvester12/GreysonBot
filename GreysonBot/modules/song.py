@@ -5,9 +5,9 @@ import aiohttp
 import youtube_dl
 
 from pyrogram import filters
-from Hackfreaks import pyromode
+from GreysonBot import pyromode
 from youtube_search import YoutubeSearch
-from Hackfreaks.pyroutils.errors import capture_err
+from GreysonBot.pyroutils.errors import capture_err
 
 
 def time_to_seconds(time):
