@@ -1,7 +1,7 @@
 import speedtest
-from Hackfreaks import DEV_USERS, dispatcher
-from Hackfreaks.modules.disable import DisableAbleCommandHandler
-from Hackfreaks.modules.helper_funcs.chat_status import dev_plus
+from GreysonBot import DEV_USERS, dispatcher
+from GreysonBot.modules.disable import DisableAbleCommandHandler
+from GreysonBot.modules.helper_funcs.chat_status import dev_plus
 from telegram import (InlineKeyboardButton, InlineKeyboardMarkup, ParseMode,
                       Update)
 from telegram.ext import CallbackContext, CallbackQueryHandler, run_async
@@ -47,7 +47,7 @@ def speedtestxyz_callback(update: Update, context: CallbackContext):
                 replymsg, parse_mode=ParseMode.MARKDOWN)
     else:
         query.answer(
-            "You are required to join Heroes Association to use this command.")
+            "You are required to join @DevelopedBotz to use this command.")
 
 
 SPEED_TEST_HANDLER = DisableAbleCommandHandler("speedtest", speedtestxyz)
