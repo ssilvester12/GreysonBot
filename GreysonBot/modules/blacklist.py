@@ -1,22 +1,22 @@
 import html
 import re
 
-import Hackfreaks.modules.sql.blacklist_sql as sql
-from Hackfreaks import LOGGER, dispatcher
-from Hackfreaks.modules.disable import DisableAbleCommandHandler
-from Hackfreaks.modules.helper_funcs.chat_status import (connection_status,
+import GreysonBot.modules.sql.blacklist_sql as sql
+from GreysonBot import LOGGER, dispatcher
+from GreysonBot.modules.disable import DisableAbleCommandHandler
+from GreysonBot.modules.helper_funcs.chat_status import (connection_status,
                                                            user_admin,
                                                            user_not_admin)
-from Hackfreaks.modules.helper_funcs.extraction import extract_text
-from Hackfreaks.modules.helper_funcs.misc import split_message
-from Hackfreaks.modules.helper_funcs.regex_helper import (infinite_loop_check,
+from GreysonBot.modules.helper_funcs.extraction import extract_text
+from GreysonBot.modules.helper_funcs.misc import split_message
+from GreysonBot.modules.helper_funcs.regex_helper import (infinite_loop_check,
                                                             regex_searcher)
 from telegram import ParseMode, Update
 from telegram.error import BadRequest
 from telegram.ext import (CallbackContext, CommandHandler, Filters,
                           MessageHandler, run_async)
 
-from Hackfreaks.modules.sql.approve_sql import is_approved
+from GreysonBot.modules.sql.approve_sql import is_approved
 BLACKLIST_GROUP = 11
 
 
