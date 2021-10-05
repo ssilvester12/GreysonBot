@@ -13,12 +13,12 @@ import json
 import urllib.request
 import urllib.parse
 import requests
-from Hackfreaks import (DEV_USERS, OWNER_ID, DRAGONS, SUPPORT_CHAT, DEMONS,
+from GreysonBot import (DEV_USERS, OWNER_ID, DRAGONS, SUPPORT_CHAT, DEMONS,
                           TIGERS, WOLVES, dispatcher,updater)
-from Hackfreaks.__main__ import STATS, TOKEN, USER_INFO
-from Hackfreaks.modules.disable import DisableAbleCommandHandler
-from Hackfreaks.modules.helper_funcs.filters import CustomFilters
-from Hackfreaks.modules.helper_funcs.chat_status import sudo_plus, user_admin
+from GreysonBot.__main__ import STATS, TOKEN, USER_INFO
+from GreysonBot.modules.disable import DisableAbleCommandHandler
+from GreysonBot.modules.helper_funcs.filters import CustomFilters
+from GreysonBot.modules.helper_funcs.chat_status import sudo_plus, user_admin
 from telegram import MessageEntity, ParseMode, Update, constants
 from telegram.error import BadRequest
 from emoji import UNICODE_EMOJI
