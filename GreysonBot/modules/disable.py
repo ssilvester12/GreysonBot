@@ -2,9 +2,9 @@ import importlib
 from typing import Union
 
 from future.utils import string_types
-from Hackfreaks import dispatcher
-from Hackfreaks.modules.helper_funcs.handlers import (CMD_STARTERS)
-from Hackfreaks.modules.helper_funcs.misc import is_module_loaded
+from GreysonBot import dispatcher
+from GreysonBot.modules.helper_funcs.handlers import (CMD_STARTERS)
+from GreysonBot.modules.helper_funcs.misc import is_module_loaded
 from telegram import ParseMode, Update
 from telegram.ext import (CallbackContext, CommandHandler, Filters,
                           MessageHandler, RegexHandler)
