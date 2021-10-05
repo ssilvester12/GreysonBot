@@ -5,23 +5,23 @@ from telegram import ParseMode, Message
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, run_async
 
-import Hackfreaks.modules.sql.notes_sql as sql
-from Hackfreaks import dispatcher, LOGGER, OWNER_ID, JOIN_LOGGER
-from Hackfreaks.__main__ import DATA_IMPORT
-from Hackfreaks.modules.helper_funcs.chat_status import user_admin
-from Hackfreaks.modules.helper_funcs.alternate import typing_action
+import GreysonBot.modules.sql.notes_sql as sql
+from GreysonBot import dispatcher, LOGGER, OWNER_ID, JOIN_LOGGER
+from GreysonBot.__main__ import DATA_IMPORT
+from GreysonBot.modules.helper_funcs.chat_status import user_admin
+from GreysonBot.modules.helper_funcs.alternate import typing_action
 
-# from Hackfreaks.modules.rules import get_rules
-import Hackfreaks.modules.sql.rules_sql as rulessql
+# from GreysonBot.modules.rules import get_rules
+import GreysonBot.modules.sql.rules_sql as rulessql
 
-# from Hackfreaks.modules.sql import warns_sql as warnssql
-import Hackfreaks.modules.sql.blacklist_sql as blacklistsql
-from Hackfreaks.modules.sql import disable_sql as disabledsql
+# from GreysonBot.modules.sql import warns_sql as warnssql
+import GreysonBot.modules.sql.blacklist_sql as blacklistsql
+from GreysonBot.modules.sql import disable_sql as disabledsql
 
-# from Hackfreaks.modules.sql import cust_filters_sql as filtersql
-# import Hackfreaks.modules.sql.welcome_sql as welcsql
-import Hackfreaks.modules.sql.locks_sql as locksql
-from Hackfreaks.modules.connection import connected
+# from GreysonBot.modules.sql import cust_filters_sql as filtersql
+# import GreysonBot.modules.sql.welcome_sql as welcsql
+import GreysonBot.modules.sql.locks_sql as locksql
+from GreysonBot.modules.connection import connected
 
 
 @run_async
