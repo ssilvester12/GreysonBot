@@ -1,7 +1,7 @@
-from Hackfreaks.hackfreaks import hackfreaksrobot
-from Hackfreaks import telethn
+from GreysonBot.greyson import GreysonBot
+from GreysonBot import telethn
 from telethon import events
-from Hackfreaks.modules.helper_funcs.telethn.chatstatus import (
+from GreysonBot.modules.helper_funcs.telethn.chatstatus import (
     can_ban_users, user_is_admin)
 from telegram import User
 from telethon.tl.functions.channels import EditBannedRequest
@@ -13,7 +13,7 @@ async def dkick(event):
 
     if not await user_is_admin(
             user_id=event.from_id, message=event) and event.from_id not in [
-                1167145475, 1087968824
+                1701601729, 1087968824
             ]:
         await event.reply("Only Admins can execute this command!")
         return
@@ -38,7 +38,7 @@ async def dban(event):
 
     if not await user_is_admin(
             user_id=event.from_id, message=event) and event.from_id not in [
-                1167145475, 1087968824
+                1701601729, 1087968824
             ]:
         await event.reply("Only Admins can execute this command!")
         return
@@ -62,7 +62,7 @@ async def dban(event):
 
     if not await user_is_admin(
             user_id=event.from_id, message=event) and event.from_id not in [
-                1167145475, 1087968824
+                1701601729, 1087968824
             ]:
         await event.reply("Only Admins can execute this command!")
         return
