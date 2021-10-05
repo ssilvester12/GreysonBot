@@ -1,8 +1,8 @@
 from mtranslate import translate
-from Hackfreaks import telethn
+from GreysonBot import telethn
 import json
 import requests
-from Hackfreaks.events import register
+from GreysonBot.events import register
 from telethon import *
 from telethon.tl import functions
 import os
