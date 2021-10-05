@@ -1,6 +1,6 @@
-from Hackfreaks.modules.helper_funcs.chat_status import user_admin
-from Hackfreaks.modules.disable import DisableAbleCommandHandler
-from Hackfreaks import dispatcher
+from GreysonBot.modules.helper_funcs.chat_status import user_admin
+from GreysonBot.modules.disable import DisableAbleCommandHandler
+from GreysonBot import dispatcher
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram import MessageEntity, ParseMode, Update
@@ -103,7 +103,7 @@ MD_HELP_HANDLER = CommandHandler("markdownhelp", markdown_help)
 dispatcher.add_handler(ECHO_HANDLER)
 dispatcher.add_handler(MD_HELP_HANDLER)
 
-__mod_name__ = "Extras"
+__mod_name__ = "Misc"
 __command_list__ = ["id", "echo"]
 __handlers__ = [
     ECHO_HANDLER,
