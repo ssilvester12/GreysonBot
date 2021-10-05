@@ -1,16 +1,16 @@
 import html
 from typing import Optional
 
-from Hackfreaks import LOGGER, TIGERS, dispatcher
-from Hackfreaks.modules.helper_funcs.chat_status import (bot_admin,
+from GreysonBot import LOGGER, TIGERS, dispatcher
+from GreysonBot.modules.helper_funcs.chat_status import (bot_admin,
                                                            can_restrict,
                                                            connection_status,
                                                            is_user_admin,
                                                            user_admin)
-from Hackfreaks.modules.helper_funcs.extraction import (extract_user,
+from GreysonBot.modules.helper_funcs.extraction import (extract_user,
                                                           extract_user_and_text)
-from Hackfreaks.modules.helper_funcs.string_handling import extract_time
-from Hackfreaks.modules.log_channel import loggable
+from GreysonBot.modules.helper_funcs.string_handling import extract_time
+from GreysonBot.modules.log_channel import loggable
 from telegram import Bot, Chat, ChatPermissions, ParseMode, Update
 from telegram.error import BadRequest
 from telegram.ext import CallbackContext, CommandHandler, run_async
