@@ -1,18 +1,18 @@
 import html
 from typing import Optional
 
-import Hackfreaks.modules.sql.blsticker_sql as sql
-from Hackfreaks import LOGGER, dispatcher
-from Hackfreaks.modules.connection import connected
-from Hackfreaks.modules.disable import DisableAbleCommandHandler
-from Hackfreaks.modules.helper_funcs.alternate import send_message
-from Hackfreaks.modules.helper_funcs.chat_status import (user_admin,
+import GreysonBot.modules.sql.blsticker_sql as sql
+from GreysonBot import LOGGER, dispatcher
+from GreysonBot.modules.connection import connected
+from GreysonBot.modules.disable import DisableAbleCommandHandler
+from GreysonBot.modules.helper_funcs.alternate import send_message
+from GreysonBot.modules.helper_funcs.chat_status import (user_admin,
                                                            user_not_admin)
-from Hackfreaks.modules.helper_funcs.misc import split_message
-from Hackfreaks.modules.helper_funcs.string_handling import extract_time
+from GreysonBot.modules.helper_funcs.misc import split_message
+from GreysonBot.modules.helper_funcs.string_handling import extract_time
 
-from Hackfreaks.modules.log_channel import loggable
-from Hackfreaks.modules.warns import warn
+from GreysonBot.modules.log_channel import loggable
+from GreysonBot.modules.warns import warn
 from telegram import (Chat, Message, ParseMode, Update, User, ChatPermissions)
 from telegram.error import BadRequest
 from telegram.ext import (CallbackContext, CommandHandler, Filters,
