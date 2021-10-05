@@ -5,8 +5,8 @@ from telethon import events
 from telegram import Update
 from telegram.ext import CallbackContext, CommandHandler, run_async
 
-from Hackfreaks import telethn, dispatcher
-from Hackfreaks.modules.helper_funcs.chat_status import dev_plus
+from GreysonBot import telethn, dispatcher
+from GreysonBot.modules.helper_funcs.chat_status import dev_plus
 
 DEBUG_MODE = False
 
