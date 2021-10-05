@@ -4,27 +4,10 @@ import re
 from sys import argv
 from typing import Optional
 
-from GreysonBot import (
-    ALLOW_EXCL,
-    CERT_PATH,
-    MAINTAINER_LINK,
-    LOGGER,
-    OWNER_ID,
-    PORT,
-    SUPPORT_CHAT,
-    TOKEN,
-    MESSAGE_DUMP,
-    URL,
-    WEBHOOK,
-    SUPPORT_CHAT,
-    dispatcher,
-    StartTime,
-    telethn,
-    pbot,
-    updater,
-)
-
-# needed to dynamically load modules
+from GreysonBot import (ALLOW_EXCL, CERT_PATH, DONATION_LINK, LOGGER,
+                          OWNER_ID, PORT, SUPPORT_CHAT, TOKEN, URL, WEBHOOK,
+                          dispatcher, StartTime, telethn, updater)
+# needed to dynamically load modules 
 # NOTE: Module order is not guaranteed, specify that in the config file!
 from GreysonBot.modules import ALL_MODULES
 from GreysonBot.modules.helper_funcs.chat_status import is_user_admin
@@ -73,7 +56,7 @@ def get_readable_time(seconds: int) -> str:
 
     return ping_time
 
-
+#start
 PM_START_TEXT = """
 Hello there, I am *Greyson* - I'm here to help you to manage your chats with ease. 
 
@@ -88,10 +71,17 @@ Use the /privacy command to view the privacy policy, and interact with your data
 G_START_TEXT = """
 Hello Greyson here , How can I help you ?
 """
-GREYSON_HOME_TEXT = """
-*Excellent!* \nNow the Bot is ready to use!\n\nUse /help to Know all modules and features
-`All commands can be used with / ? or !`
+
+#donate
+DONATE_STRING = """
+So you want to donate? Amazing!
+It took a lot of work for my creator (@Kunaldiwan) to get me to where I am now - so if you have some money to spare, and want to show your support; Donate!
+After all, server fees don't pay themselves - so every little helps! All donation money goes straight to funding the VPS, and of course, boosting morale - always nice to see my work is appreciated :) /n
+You can Donate 💸 him by clicking below button 👇 /n
+Thank you for your generosity!
 """
+
+#source
 SOURCEG_STRING = """Oh you want my source . I am built in python 3 , Using the python-telegram-bot library, and am fully open source .
 \nDon't forgot to fork 🍴 and star 🌟 the repo . \n\nCheck my source below 👇 \n⚙️ Source ⚙️ - [Click here](https://github.com/Kunal-Diwan/GreysonBot)"""
 
@@ -126,6 +116,7 @@ I have lots of handy features, such as flood control, a warning system, a note k
 *Helpful commands* :
 ✪ /start: Starts me! You've probably already used this. 
 ✪ /help: Sends this message; I'll tell you more about myself!
+✪ /donate: Support my owner
 ✪ /source: Gives you my source .
 
 If you have any bugs or questions on how to use me head to @GreysonChats. \n\nAll commands can be used with the following: / !\n\nAnd the following :-"""
@@ -857,29 +848,28 @@ def source(update: Update, context: CallbackContext):
             ),
         )
 
-        if OWNER_ID != 1701601729 and MAINTAINER_LINK:
+        if OWNER_ID != 1701601729 and DONATION_LINK:
             update.effective_message.reply_text(
-                "I am maintained by "
-                "[him]({})".format(MAINTAINER_LINK),
+                "You can also donate my maintainer by clicking"
+                "[here]({})".format(DONATION_LINK),
                 parse_mode=ParseMode.MARKDOWN,
             )
 
     else:
         try:
             bot.send_message(
-                user.id,
-                SOURCEG_STRING,
+                chat_id,
+                SOURCE_STRING,
                 parse_mode=ParseMode.MARKDOWN,
                 disable_web_page_preview=True,
-            )
-
-            update.effective_message.reply_text(
-                "I have PM you about my source!"
-            )
-        except Unauthorized:
-            update.effective_message.reply_text(
-                "Contact me in PM first to get source information."
-            )
+                reply_markup=InlineKeyboardMarkup(
+                [
+                  [
+                    InlineKeyboardButton(text="↗️ Source ↗️", url="https://github.com/Kunal-Diwan/GreysonBot")
+                 ] 
+                ]
+            ),
+        )
 
 def migrate_chats(update: Update, context: CallbackContext):
     msg = update.effective_message  # type: Optional[Message]
