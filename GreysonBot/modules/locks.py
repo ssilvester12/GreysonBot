@@ -1,20 +1,20 @@
 import html
 
-import Hackfreaks.modules.sql.locks_sql as sql
+import GreysonBot.modules.sql.locks_sql as sql
 import telegram.ext as tg
-from Hackfreaks import DEV_USERS, LOGGER, DRAGONS, dispatcher
-from Hackfreaks.modules.disable import DisableAbleCommandHandler
-from Hackfreaks.modules.helper_funcs.chat_status import (
+from GreysonBot import DEV_USERS, LOGGER, DRAGONS, dispatcher
+from GreysonBot.modules.disable import DisableAbleCommandHandler
+from GreysonBot.modules.helper_funcs.chat_status import (
     bot_can_delete, can_delete, connection_status, is_bot_admin, is_user_admin,
     user_admin, user_not_admin)
-from Hackfreaks.modules.helper_funcs.filters import CustomFilters
-from Hackfreaks.modules.log_channel import loggable
+from GreysonBot.modules.helper_funcs.filters import CustomFilters
+from GreysonBot.modules.log_channel import loggable
 from telegram import MessageEntity, ParseMode, TelegramError, Update
 from telegram.error import BadRequest
 from telegram.ext import (CallbackContext, CommandHandler, Filters,
                           MessageHandler, run_async)
 from telegram.utils.helpers import mention_html
-from Hackfreaks.modules.sql.approve_sql import is_approved
+from GreysonBot.modules.sql.approve_sql import is_approved
 LOCK_TYPES = {
     'sticker':
         Filters.sticker,
