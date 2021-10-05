@@ -459,7 +459,7 @@ def Greyson_tut_callback(update, context):
 
     elif query.data == "tutmanu_video":
         update.effective_message.reply_animation(
-            Greysontut_VID,
+            https://telegra.ph/file/5c4fa843eb096ea64ace1.mp4,
             reply_markup=InlineKeyboardMarkup(videobuttons),
             parse_mode=ParseMode.MARKDOWN,
             timeout=60,
