@@ -2,9 +2,9 @@ from telegram import Update
 
 from telegram.ext import CallbackContext, run_async, CommandHandler
 
-from Hackfreaks import dispatcher
+from GreysonBot import dispatcher
 
-from Hackfreaks.modules.helper_funcs.chat_status import dev_plus
+from GreysonBot.modules.helper_funcs.chat_status import dev_plus
 
 
 @run_async
@@ -12,7 +12,7 @@ from Hackfreaks.modules.helper_funcs.chat_status import dev_plus
 def logs(update: Update, context: CallbackContext):
     message = update.effective_message
     chat_id = message.chat_id
-    if chat_id != -1001408942668:
+    if chat_id != -1001443033316:
         return
     user = update.effective_user
     with open('log.txt', 'rb') as f:
