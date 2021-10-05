@@ -5,8 +5,8 @@ import textwrap
 import traceback
 from contextlib import redirect_stdout
 
-from Hackfreaks import LOGGER, dispatcher
-from Hackfreaks.modules.helper_funcs.chat_status import dev_plus
+from GreysonBot import LOGGER, dispatcher
+from GreysonBot.modules.helper_funcs.chat_status import dev_plus
 from telegram import ParseMode, Update
 from telegram.ext import CallbackContext, CommandHandler, run_async
 
