@@ -1,3 +1,3 @@
-worker: python3 -m Hackfreaks
-web: python3 -m Hackfreaks
+worker: python3 -m GreysonBot
+web: python3 -m GreysonBot
 ps:scale worker=1
