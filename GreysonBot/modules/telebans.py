@@ -1,4 +1,4 @@
-from GreysonBot.greyson import GreysonBot
+from GreysonBot.GreysonBot import GreysonBot
 from GreysonBot import telethn
 from telethon import events
 from GreysonBot.modules.helper_funcs.telethn.chatstatus import (
