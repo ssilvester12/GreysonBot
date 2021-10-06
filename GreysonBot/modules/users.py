@@ -1,10 +1,10 @@
 from io import BytesIO
 from time import sleep
 
-import Hackfreaks.modules.sql.users_sql as sql
-from Hackfreaks import DEV_USERS, LOGGER, OWNER_ID, dispatcher
-from Hackfreaks.modules.helper_funcs.chat_status import dev_plus, sudo_plus
-from Hackfreaks.modules.sql.users_sql import get_all_users
+import GreysonBot.modules.sql.users_sql as sql
+from GreysonBot import DEV_USERS, LOGGER, OWNER_ID, dispatcher
+from GreysonBot.modules.helper_funcs.chat_status import dev_plus, sudo_plus
+from GreysonBot.modules.sql.users_sql import get_all_users
 from telegram import TelegramError, Update
 from telegram.error import BadRequest
 from telegram.ext import (CallbackContext, CommandHandler, Filters,
