@@ -24,7 +24,7 @@ jobs:
 
         with:
 
-          name:  animekaizoku/hackfreaks
+          name:  Kunal-Diwan/GreysonBot
 
           username: ${{ secrets.DOCKER_USERNAME }}
 
