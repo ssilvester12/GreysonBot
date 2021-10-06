@@ -56,7 +56,7 @@ def get_readable_time(seconds: int) -> str:
 
     return ping_time
 
-#start
+
 PM_START_TEXT = """
 Hello there, I am *Greyson* - I'm here to help you to manage your chats with ease. 
 
@@ -71,6 +71,10 @@ Use the /privacy command to view the privacy policy, and interact with your data
 G_START_TEXT = """
 Hello Greyson here , How can I help you ?
 """
+GREYSON_HOME_TEXT = """
+*Excellent!* \nNow the Bot is ready to use!\n\nUse /help to Know all modules and features
+`All commands can be used with / ? or !`
+"""
 
 #donate
 DONATE_STRING = """
@@ -79,13 +83,31 @@ It took a lot of work for my creator (@Kunaldiwan) to get me to where I am now -
 After all, server fees don't pay themselves - so every little helps! All donation money goes straight to funding the VPS, and of course, boosting morale - always nice to see my work is appreciated :) /n
 You can Donate 💸 him by clicking below button 👇 /n
 Thank you for your generosity!
-"""
+SOURCEG_STRING = """Oh you want my source . I am built in python 3 , Using the python-telegram-bot library, and am fully open source .
+\nDon't forgot to fork 🍴 and star 🌟 the repo . \n\nCheck my source below 👇 \n⚙️ Source ⚙️ - [Click here](https://github.com/Kunal-Diwan/GreysonBot)"""
 
-#source
-SOURCE_STRING = """Oh you want my source . I am built in python 3 , Using the python-telegram-bot library, and am fully open source .
-\nDon't forgot to fork 🍴 and star 🌟 the repo . \n\nCheck my source below 👇"""
+buttons = [
+    [
+        InlineKeyboardButton(
+            text="➕️ Add Grayson to chat!  ➕️", url="t.me/MrGreysonBot?startgroup=true"),
+    ],
+    [
+        InlineKeyboardButton(text="📚 Guide 📚", callback_data="guidemenu_"),
+        InlineKeyboardButton(text="⚒️ Support 🛠", callback_data="support_"),
+    ],
+    [
+        InlineKeyboardButton(
+            text="🎥 Configuration Tutorial 🎥", callback_data="tutmanu_"
+        ),
+    ],
+]
 
-#help
+gbuttons = [[InlineKeyboardButton(text="⚙️ help ⚙️",
+                                  url="http://t.me/MrGreysonBot?start=help")]]
+
+videobuttons = [[InlineKeyboardButton(text="✅ Done ✅",
+                                  callback_data="tutmanu_home")]]
+
 HELP_STRINGS = """
 *Help*
 Hey! My name is Greyson . I am a group management bot, here to help you get around and keep the order in your groups!
@@ -95,10 +117,17 @@ I have lots of handy features, such as flood control, a warning system, a note k
 *Helpful commands* :
 ✪ /start: Starts me! You've probably already used this. 
 ✪ /help: Sends this message; I'll tell you more about myself!
-✪ /donate: Support my owner
 ✪ /source: Gives you my source .
 
-If you have any bugs or questions on how to use me head to @GreysonChats. \n\nAll commands can be used with the following: / !\n\nAnd the following :-""
+If you have any bugs or questions on how to use me head to @GreysonChats. \n\nAll commands can be used with the following: / !\n\nAnd the following :-"""
+
+GreysonG_IMG = "https://telegra.ph/file/83dbae46536c4f88a28b7.jpg"
+
+Greysontut_VID = "https://telegra.ph/file/f0df0d42c1d2a189d8c61.mp4"
+
+SOURCE_STRING = """Oh you want my source . I am built in python 3 , Using the python-telegram-bot library, and am fully open source .
+\nDon't forgot to fork 🍴 and star 🌟 the repo . \n\nCheck my source below 👇"""
+
 IMPORTED = {}
 MIGRATEABLE = []
 HELPABLE = {}
@@ -200,30 +229,14 @@ def start(update: Update, context: CallbackContext):
 
         else:
             update.effective_message.reply_text(
-                PM_START_TEXT.format(escape_markdown(first_name), escape_markdown(context.bot.first_name), OWNER_ID),
+                PM_START_TEXT,
+                reply_markup=InlineKeyboardMarkup(buttons),
                 parse_mode=ParseMode.MARKDOWN,
-                reply_markup=InlineKeyboardMarkup(                   
-                          [[
-                              InlineKeyboardButton(
-                              text="➕️ Add Greyson to chat ➕️",
-                              url="t.me/MrGreysonBot?startgroup=true")
-                          ],
-                          [
-                              InlineKeyboardButton(
-                              text="📚 Guide 📚",
-                              callback_data="guidemenu_"),
-                              InlineKeyboardButton(
-                              text="⚒️ Support 🛠",
-                              callback_data="support_")
-                          ],
-                          [
-                              InlineKeyboardButton(
-                              text="🎥 Configuration Tutorial 🎥",
-                              callback_data="tutmanu_")                  
-                          ]])) 
+                timeout=60,
+            )
     else:
         update.effective_message.reply_photo(
-            https://telegra.ph/file/83dbae46536c4f88a28b7.jpg,
+            GreysonG_IMG,
             G_START_TEXT,
             reply_markup=InlineKeyboardMarkup(gbuttons),
             parse_mode=ParseMode.MARKDOWN,
@@ -448,10 +461,8 @@ def Greyson_tut_callback(update, context):
             ),
         )
     elif query.data == "tutmanu_home":
-        query.message.edit_text(
-            text=f"* Excellent!* \nNow the Bot is ready to use!\n\nUse /help to Know all modules and features "
-            f"\n`All commands can be used with / ? or !`"
-            f"",
+        update.effective_message.reply_text(
+            GREYSON_HOME_TEXT,
             parse_mode=ParseMode.MARKDOWN,
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup(
@@ -461,7 +472,7 @@ def Greyson_tut_callback(update, context):
 
     elif query.data == "tutmanu_video":
         update.effective_message.reply_animation(
-            https://telegra.ph/file/5c4fa843eb096ea64ace1.mp4,
+            Greysontut_VID,
             reply_markup=InlineKeyboardMarkup(videobuttons),
             parse_mode=ParseMode.MARKDOWN,
             timeout=60,
@@ -837,17 +848,17 @@ def source(update: Update, context: CallbackContext):
             ),
         )
 
-        if OWNER_ID != 1701601729 and DONATION_LINK:
+        if OWNER_ID != 1701601729 and MAINTAINER_LINK:
             update.effective_message.reply_text(
-                "You can also donate my maintainer by clicking"
-                "[here]({})".format(DONATION_LINK),
+                "I am maintained by "
+                "[him]({})".format(MAINTAINER_LINK),
                 parse_mode=ParseMode.MARKDOWN,
             )
 
     else:
         try:
             bot.send_message(
-                chat_id,
+                user.id,
                 SOURCE_STRING,
                 parse_mode=ParseMode.MARKDOWN,
                 disable_web_page_preview=True,
@@ -945,9 +956,7 @@ def main():
     )
   
     source_handler = CommandHandler("source", source)
-    donate_handler = CommandHandler("donate", donate)
-    migrate_handler = MessageHandler(Filters.status_update.migrate,
-                                     migrate_chats)
+    migrate_handler = MessageHandler(Filters.status_update.migrate, migrate_chats)
 
     # dispatcher.add_handler(test_handler)
     dispatcher.add_handler(start_handler)
@@ -961,7 +970,6 @@ def main():
     dispatcher.add_handler(settings_callback_handler)
     dispatcher.add_handler(migrate_handler)
     dispatcher.add_handler(source_handler)
-    dispatcher.add_handler(donate_handler)
 
     dispatcher.add_error_handler(error_callback)
 
