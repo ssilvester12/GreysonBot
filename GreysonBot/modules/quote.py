@@ -12,7 +12,7 @@ import random
 import json
 import os
 import re
-from GreysonBot.GreysonBot import greyson
+from GreysonBot import greyson
 
 COLORS = [
     "#F07975", "#F49F69", "#F9C84A", "#8CC56E", "#6CC7DC", "#80C1FA", "#BCB3F9", "#E181AC"]
