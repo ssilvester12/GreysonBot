@@ -82,9 +82,7 @@ So you want to donate? Amazing!
 It took a lot of work for my creator (@Kunaldiwan) to get me to where I am now - so if you have some money to spare, and want to show your support; Donate!
 After all, server fees don't pay themselves - so every little helps! All donation money goes straight to funding the VPS, and of course, boosting morale - always nice to see my work is appreciated :) /n
 You can Donate 💸 him by clicking below button 👇 /n
-Thank you for your generosity!
-SOURCEG_STRING = """Oh you want my source . I am built in python 3 , Using the python-telegram-bot library, and am fully open source .
-\nDon't forgot to fork 🍴 and star 🌟 the repo . \n\nCheck my source below 👇 \n⚙️ Source ⚙️ - [Click here](https://github.com/Kunal-Diwan/GreysonBot)"""
+Thank you for your generosity!"""
 
 buttons = [
     [
