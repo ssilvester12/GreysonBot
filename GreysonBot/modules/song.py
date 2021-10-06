@@ -5,7 +5,7 @@ import aiohttp
 import youtube_dl
 
 from pyrogram import filters
-from GreysonBot import pyromode
+from GreysonBot import pyroutils
 from youtube_search import YoutubeSearch
 from GreysonBot.pyroutils.errors import capture_err
 
