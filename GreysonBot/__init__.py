@@ -7,10 +7,6 @@ import spamwatch
 import telegram.ext as tg
 from telethon import TelegramClient
 
-from pyrogram import Client, errors
-from pyrogram.errors.exceptions.bad_request_400 import PeerIdInvalid, ChannelInvalid
-from pyrogram.types import Chat, User
-
 StartTime = time.time()
 
 # enable logging
@@ -75,7 +71,7 @@ if ENV:
     CERT_PATH = os.environ.get("CERT_PATH")
     API_ID = os.environ.get('API_ID', None)
     API_HASH = os.environ.get('API_HASH', None)
-    DB_URI = os.environ.get('SQLALCHEMY_DATABASE_URI')
+    DB_URI = os.environ.get('DATABASE_URL')
     DONATION_LINK = os.environ.get('DONATION_LINK')
     LOAD = os.environ.get("LOAD", "").split()
     NO_LOAD = os.environ.get("NO_LOAD", "translation").split()
@@ -89,7 +85,6 @@ if ENV:
     CASH_API_KEY = os.environ.get('CASH_API_KEY', None)
     TIME_API_KEY = os.environ.get('TIME_API_KEY', None)
     AI_API_KEY = os.environ.get('AI_API_KEY', None)
-    FERNET_ENCRYPTION_KEY = os.environ.get('FERNET_ENCRYPTION_KEY', None)
     WALL_API = os.environ.get('WALL_API', None)
     SUPPORT_CHAT = os.environ.get('SUPPORT_CHAT', None)
     SPAMWATCH_SUPPORT_CHAT = os.environ.get('SPAMWATCH_SUPPORT_CHAT', None)
@@ -158,7 +153,6 @@ else:
     CASH_API_KEY = Config.CASH_API_KEY
     TIME_API_KEY = Config.TIME_API_KEY
     AI_API_KEY = Config.AI_API_KEY
-    FERNET_ENCRYPTION_KEY = Config.FERNET_ENCRYPTION_KEY
     WALL_API = Config.WALL_API
     SUPPORT_CHAT = Config.SUPPORT_CHAT
     SPAMWATCH_SUPPORT_CHAT = Config.SPAMWATCH_SUPPORT_CHAT
@@ -183,36 +177,6 @@ else:
 updater = tg.Updater(TOKEN, workers=WORKERS, use_context=True)
 telethn = TelegramClient("GreysonBot", API_ID, API_HASH)
 dispatcher = updater.dispatcher
-
-pyromode = Client("GreysonBotPyro", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN, workers=16)
-apps = []
-apps.append(pyromode)
-
-async def get_entity(client, entity):
-    entity_client = client
-    if not isinstance(entity, Chat):
-        try:
-            entity = int(entity)
-        except ValueError:
-            pass
-        except TypeError:
-            entity = entity.id
-        try:
-            entity = await client.get_chat(entity)
-        except (PeerIdInvalid, ChannelInvalid):
-            for pyromode in apps:
-                if pyromode != client:
-                    try:
-                        entity = await pyromode.get_chat(entity)
-                    except (PeerIdInvalid, ChannelInvalid):
-                        pass
-                    else:
-                        entity_client = pyromode
-                        break
-            else:
-                entity = await pyromode.get_chat(entity)
-                entity_client = pyromode
-    return entity, entity_client
 
 DRAGONS = list(DRAGONS) + list(DEV_USERS)
 DEV_USERS = list(DEV_USERS)
