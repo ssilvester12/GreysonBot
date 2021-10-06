@@ -178,6 +178,36 @@ updater = tg.Updater(TOKEN, workers=WORKERS, use_context=True)
 telethn = TelegramClient("GreysonBot", API_ID, API_HASH)
 dispatcher = updater.dispatcher
 
+pyromode = Client("GreysonBotPyro", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN, workers=16)
+apps = []
+apps.append(pyromode)
+
+async def get_entity(client, entity):
+    entity_client = client
+    if not isinstance(entity, Chat):
+        try:
+            entity = int(entity)
+        except ValueError:
+            pass
+        except TypeError:
+            entity = entity.id
+        try:
+            entity = await client.get_chat(entity)
+        except (PeerIdInvalid, ChannelInvalid):
+            for pyromode in apps:
+                if pyromode != client:
+                    try:
+                        entity = await pyromode.get_chat(entity)
+                    except (PeerIdInvalid, ChannelInvalid):
+                        pass
+                    else:
+                        entity_client = pyromode
+                        break
+            else:
+                entity = await pyromode.get_chat(entity)
+                entity_client = pyromode
+    return entity, entity_client
+
 DRAGONS = list(DRAGONS) + list(DEV_USERS)
 DEV_USERS = list(DEV_USERS)
 WOLVES = list(WOLVES)
