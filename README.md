@@ -46,9 +46,8 @@ If all works well, bot should send message to the **MESSAGE_DUMP** Group .
 <a href="https://t.me/GreysonChats"><img src="https://img.shields.io/badge/Join-Telegram%20Group-blue.svg?logo=telegram"></a>
 
 ### © Copyright 
-
-#### Copyright (C) 2021-2022 by Kunal-Diwan ❤️️
-#### Licensed under the terms of the GPL-3.0 License .
+             Copyright (C) 2021-2022 by Kunal-Diwan ❤️️
+           Licensed under the terms of the GPL-3.0 License .
 
 ## Developer 💻 
 
