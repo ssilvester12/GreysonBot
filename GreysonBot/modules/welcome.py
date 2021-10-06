@@ -4,21 +4,21 @@ import re
 import time
 from functools import partial
 
-import Hackfreaks.modules.sql.welcome_sql as sql
-from Hackfreaks import (DEV_USERS, LOGGER, OWNER_ID, DRAGONS, DEMONS, TIGERS,
+import GreysonBot.modules.sql.welcome_sql as sql
+from GreysonBot import (DEV_USERS, LOGGER, OWNER_ID, DRAGONS, DEMONS, TIGERS,
                           WOLVES, sw, dispatcher, JOIN_LOGGER)
-from Hackfreaks.modules.helper_funcs.chat_status import (
+from GreysonBot.modules.helper_funcs.chat_status import (
     is_user_ban_protected,
     user_admin,
 )
-from Hackfreaks.modules.helper_funcs.misc import build_keyboard, revert_buttons
-from Hackfreaks.modules.helper_funcs.msg_types import get_welcome_type
-from Hackfreaks.modules.helper_funcs.string_handling import (
+from GreysonBot.modules.helper_funcs.misc import build_keyboard, revert_buttons
+from GreysonBot.modules.helper_funcs.msg_types import get_welcome_type
+from GreysonBot.modules.helper_funcs.string_handling import (
     escape_invalid_curly_brackets,
     markdown_parser,
 )
-from Hackfreaks.modules.log_channel import loggable
-from Hackfreaks.modules.sql.global_bans_sql import is_user_gbanned
+from GreysonBot.modules.log_channel import loggable
+from GreysonBot.modules.sql.global_bans_sql import is_user_gbanned
 from telegram import (
     ChatPermissions,
     InlineKeyboardButton,
