@@ -2,9 +2,9 @@
 # Default owners for everything in the repo, unless a later match takes precedence
 
 # Phoenix owns the files under blacklist thingies
-/Hackfreaks/modules/blacklistusers.py @rsktg
-/Hackfreaks/modules/sql/blacklistusers_sql.py @rsktg
+/GreysonBot/modules/blacklistusers.py @rsktg
+/GreysonBot/modules/sql/blacklistusers_sql.py @rsktg
 #pep8-ing the code doesn't change maker
-/Hackfreaks/modules/paste.py @DragSama
-/Hackfreaks/modules/speed_test.py @DragSama
+/GreysonBot/modules/paste.py @DragSama
+/GreysonBot/modules/speed_test.py @DragSama
 

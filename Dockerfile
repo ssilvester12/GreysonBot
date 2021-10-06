@@ -64,12 +64,12 @@ RUN apt update && apt upgrade -y && \
 # Pypi package Repo upgrade
 RUN pip3 install --upgrade pip setuptools
 
-# Copy Python Requirements to /root/Hackfreaks
-RUN git clone -b Alpha https://github.com/swatv3nub/Hackfreaks /root/Hackfreaks
-WORKDIR /root/Hackfreaks
+# Copy Python Requirements to /root/GreysonBot
+RUN git clone -b PTB https://github.com/Kunal-Diwan/GreysonBot /root/GreysonBot
+WORKDIR /root/GreysonBot
 
-#Copy config file to /root/Hackfreaks/Hackfreaks
-COPY ./Hackfreaks/sample_config.py ./Hackfreaks/config.py* /root/Hackfreaks/Hackfreaks/
+#Copy config file to /root/GreysonBot/GreysonBot
+COPY ./GreysonBot/sample_config.py ./GreysonBot/config.py* /root/GreysonBot/GreysonBot/
 
 ENV PATH="/home/bot/bin:$PATH"
 
@@ -77,4 +77,4 @@ ENV PATH="/home/bot/bin:$PATH"
 RUN pip3 install -U -r requirements.txt
 
 # Starting Worker
-CMD ["python3","-m","Hackfreaks"]
+CMD ["python3","-m","GreysonBot"]
