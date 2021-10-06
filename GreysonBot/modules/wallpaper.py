@@ -1,8 +1,8 @@
 from random import randint
 
 import requests as r
-from Hackfreaks import SUPPORT_CHAT, WALL_API, dispatcher
-from Hackfreaks.modules.disable import DisableAbleCommandHandler
+from GreysonBot import SUPPORT_CHAT, WALL_API, dispatcher
+from GreysonBot.modules.disable import DisableAbleCommandHandler
 from telegram import Update
 from telegram.ext import CallbackContext, run_async
 
