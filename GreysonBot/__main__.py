@@ -126,6 +126,9 @@ Greysontut_VID = "https://telegra.ph/file/f0df0d42c1d2a189d8c61.mp4"
 SOURCE_STRING = """Oh you want my source . I am built in python 3 , Using the python-telegram-bot library, and am fully open source .
 \nDon't forgot to fork 🍴 and star 🌟 the repo . \n\nCheck my source below 👇"""
 
+SOURCEG_STRING = """Oh you want my source . I am built in python 3 , Using the python-telegram-bot library, and am fully open source .
+\nDon't forgot to fork 🍴 and star 🌟 the repo . \n\nCheck my source below 👇 \n⚙️ Source ⚙️ - [Click here](https://github.com/Kunal-Diwan/GreysonBot)"""
+
 IMPORTED = {}
 MIGRATEABLE = []
 HELPABLE = {}
@@ -857,17 +860,18 @@ def source(update: Update, context: CallbackContext):
         try:
             bot.send_message(
                 user.id,
-                SOURCE_STRING,
+                SOURCEG_STRING,
                 parse_mode=ParseMode.MARKDOWN,
                 disable_web_page_preview=True,
-                reply_markup=InlineKeyboardMarkup(
-                [
-                  [
-                    InlineKeyboardButton(text="↗️ Source ↗️", url="https://github.com/Kunal-Diwan/GreysonBot")
-                 ] 
-                ]
-            ),
-        )
+            )
+
+            update.effective_message.reply_text(
+                "I have PM you about my source!"
+            )
+        except Unauthorized:
+            update.effective_message.reply_text(
+                "Contact me in PM first to get source information."
+            )
 
 @run_async
 def donate(update: Update, context: CallbackContext):
