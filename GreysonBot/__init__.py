@@ -181,7 +181,7 @@ else:
 
 updater = tg.Updater(TOKEN, workers=WORKERS, use_context=True)
 telethn = TelegramClient("GreysonBot", API_ID, API_HASH)
-pbot = Client("GreysonBot", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
+pbot = Client("greysonpbot", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
 dispatcher = updater.dispatcher
 
 pyromode = Client("GreysonBotPyro", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN, workers=16)
