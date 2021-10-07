@@ -552,7 +552,7 @@ def Greyson_guide_callback(update, context):
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup([[
                 InlineKeyboardButton(text="Admins Settings", callback_data="guidemenu_permis"),
-                InlineKeyboardButton(text="Anti Spam", callback_data="guidemenu_spamprot")],
+                InlineKeyboardButton(text="SpamRefiner", callback_data="guidemenu_spamprot")],
                 [
                 InlineKeyboardButton(text="🔙 Back", callback_data="guidemenu_")]
                                                ]),
@@ -581,10 +581,10 @@ def Greyson_guide_callback(update, context):
         )
     elif query.data == "guidemenu_spamprot":
         query.message.edit_text(
-            text="* ｢ Anti-Spam Settings 」*"
-                 "\n\n*Antispam :*"
+            text="* ｢ SpamRefiner Settings 」*"
+                 "\n\n*SpamRefiner :*"
                  "\nBy enabling this, you can protect your groups free from scammers/spammers."
-                 "\nRun /antispam on in your chat to enable"
+                 "\nRun /spamrefiner on in your chat to enable"
                  "\nAppeal Chat: @GreysonChats"
                  "\n\n • *Anti-Flood* allows you to keep your chat clean from flooding."
                  "\n • With the help of *Blacklists* you can blacklist words,sentences and stickers which you don't want to be used by group members."
