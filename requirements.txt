@@ -12,6 +12,7 @@ pynewtonmath
 spongemock
 zalgo-text
 geopy
+multicolorcaptcha
 nltk
 psutil
 aiohttp>=2.2.5
