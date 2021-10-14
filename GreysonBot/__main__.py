@@ -4,7 +4,7 @@ import re
 from sys import argv
 from typing import Optional
 
-from SaitamaRobot import (
+fromGreysonBot import (
     ALLOW_EXCL,
     CERT_PATH,
     DONATION_LINK,
@@ -22,9 +22,9 @@ from SaitamaRobot import (
 
 # needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
-from SaitamaRobot.modules import ALL_MODULES
-from SaitamaRobot.modules.helper_funcs.chat_status import is_user_admin
-from SaitamaRobot.modules.helper_funcs.misc import paginate_modules
+from GreysonBot.modules import ALL_MODULES
+from GreysonBot.modules.helper_funcs.chat_status import is_user_admin
+from GreysonBot.modules.helper_funcs.misc import paginate_modules
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, Update
 from telegram.error import (
     BadRequest,
@@ -114,7 +114,7 @@ CHAT_SETTINGS = {}
 USER_SETTINGS = {}
 
 for module_name in ALL_MODULES:
-    imported_module = importlib.import_module("SaitamaRobot.modules." + module_name)
+    imported_module = importlib.import_module("GreysonBot.modules." + module_name)
     if not hasattr(imported_module, "__mod_name__"):
         imported_module.__mod_name__ = imported_module.__name__
 
@@ -227,11 +227,11 @@ def start(update: Update, context: CallbackContext):
                         [
                             InlineKeyboardButton(
                                 text="🚑 Support",
-                                url=f"https://t.me/{SUPPORT_CHAT}",
+                                url=f"https://t.me/hhj",
                             ),
                             InlineKeyboardButton(
                                 text="🔔 Updates",
-                                url="https://t.me/OnePunchUpdates",
+                                url="https://t.me/OnePunchs",
                             ),
                         ],
                         [
@@ -247,7 +247,7 @@ def start(update: Update, context: CallbackContext):
                         [
                             InlineKeyboardButton(
                                 text="☠️ Kaizoku Network",
-                                url="https://t.me/Kaizoku/4",
+                                url="https://t.me/Ka/4",
                             ),
                         ],
                     ],
