@@ -4,7 +4,7 @@ import re
 from sys import argv
 from typing import Optional
 
-fromGreysonBot import (
+from GreysonBot import (
     ALLOW_EXCL,
     CERT_PATH,
     DONATION_LINK,
