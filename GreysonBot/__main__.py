@@ -248,8 +248,8 @@ def start(update: Update, context: CallbackContext):
                         ],
                         [
                             InlineKeyboardButton(
-                                text="☠️ Kaizoku Network",
-                                url="https://t.me/Ka/4",
+                                text="Basic Commands",
+                                url="t.me/{}?start=help".format(context.bot.username)",
                             ),
                         ],
                     ],
