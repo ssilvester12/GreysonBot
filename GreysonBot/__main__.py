@@ -249,12 +249,7 @@ def start(update: Update, context: CallbackContext):
                         [
                             InlineKeyboardButton(
                                 text="Basic Commands",
-                                url="t.me/{}?start=help".format(context.bot.username)",
-                            ),
-                        ],
-                    ],
-                ),
-            )
+                                url="t.me/{}?start=help".format(context.bot.username))]]))
     else:
         update.effective_message.reply_text(
             "I'm awake already!\n<b>Haven't slept since:</b> <code>{}</code>".format(
