@@ -1,17 +1,30 @@
-import importlib 
+import importlib
 import time
 import re
 from sys import argv
 from typing import Optional
 
-from GreysonBot import (ALLOW_EXCL, CERT_PATH, DONATION_LINK, LOGGER,
-                          OWNER_ID, PORT, SUPPORT_CHAT, TOKEN, URL, WEBHOOK,
-                          dispatcher, StartTime, telethn, updater)
-# needed to dynamically load modules 
+from SaitamaRobot import (
+    ALLOW_EXCL,
+    CERT_PATH,
+    DONATION_LINK,
+    LOGGER,
+    OWNER_ID,
+    PORT,
+    TOKEN,
+    URL,
+    WEBHOOK,
+    SUPPORT_CHAT,
+    dispatcher,
+    StartTime,
+    telethn,
+    updater)
+
+# needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
-from GreysonBot.modules import ALL_MODULES
-from GreysonBot.modules.helper_funcs.chat_status import is_user_admin
-from GreysonBot.modules.helper_funcs.misc import paginate_modules
+from SaitamaRobot.modules import ALL_MODULES
+from SaitamaRobot.modules.helper_funcs.chat_status import is_user_admin
+from SaitamaRobot.modules.helper_funcs.misc import paginate_modules
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, Update
 from telegram.error import (
     BadRequest,
@@ -58,76 +71,38 @@ def get_readable_time(seconds: int) -> str:
 
 
 PM_START_TEXT = """
-Hello there, I am *Greyson* - I'm here to help you to manage your chats with ease. 
-
-➡️ Just add me in your group as admin .
-
-Hit /help to know my commands .
-
-You can get my news everyday at @GraysonNews .
-
-Use the /privacy command to view the privacy policy, and interact with your data.
+Hey hi {}, I'm {}!
+I am an Anime themed group management bot.
+Built by weebs for weebs, I specialize in managing anime eccentric communities!
 """
-G_START_TEXT = """
-Hello Greyson here , How can I help you ?
-"""
-GREYSON_HOME_TEXT = """
-*Excellent!* \nNow the Bot is ready to use!\n\nUse /help to Know all modules and features
-`All commands can be used with / ? or !`
-"""
-
-#donate
-DONATE_STRING = """
-So you want to donate? Amazing!
-It took a lot of work for my creator (@Kunaldiwan) to get me to where I am now - so if you have some money to spare, and want to show your support; Donate!
-After all, server fees don't pay themselves - so every little helps! All donation money goes straight to funding the VPS, and of course, boosting morale - always nice to see my work is appreciated :) /n
-You can Donate 💸 him by clicking below button 👇 /n
-Thank you for your generosity!"""
-
-buttons = [
-    [
-        InlineKeyboardButton(
-            text="➕️ Add Grayson to chat!  ➕️", url="t.me/MrGreysonBot?startgroup=true"),
-    ],
-    [
-        InlineKeyboardButton(text="📚 Guide 📚", callback_data="guidemenu_"),
-        InlineKeyboardButton(text="⚒️ Support 🛠", callback_data="support_"),
-    ],
-    [
-        InlineKeyboardButton(
-            text="🎥 Configuration Tutorial 🎥", callback_data="tutmanu_"
-        ),
-    ],
-]
-
-gbuttons = [[InlineKeyboardButton(text="⚙️ help ⚙️",
-                                  url="http://t.me/MrGreysonBot?start=help")]]
-
-videobuttons = [[InlineKeyboardButton(text="✅ Done ✅",
-                                  callback_data="tutmanu_home")]]
 
 HELP_STRINGS = """
-*Help*
-Hey! My name is Greyson . I am a group management bot, here to help you get around and keep the order in your groups!
+Hey there! My name is *{}*.
+I'm a Hero For Fun and help admins manage their groups with One Punch! Have a look at the following for an idea of some of \
+the things I can help you with.
 
-I have lots of handy features, such as flood control, a warning system, a note keeping system, and even predetermined replies on certain keywords.
+*Main* commands available:
+ • /help: PM's you this message.
+ • /help <module name>: PM's you info about that module.
+ • /donate: information on how to donate!
+ • /settings:
+   • in PM: will send you your settings for all supported modules.
+   • in a group: will redirect you to pm, with all that chat's settings.
 
-*Helpful commands* :
-✪ /start: Starts me! You've probably already used this. 
-✪ /help: Sends this message; I'll tell you more about myself!
-✪ /source: Gives you my source .
 
-If you have any bugs or questions on how to use me head to @GreysonChats. \n\nAll commands can be used with the following: / !\n\nAnd the following :-"""
+{}
+And the following:
+""".format(
+    dispatcher.bot.first_name,
+    "" if not ALLOW_EXCL else "\nAll commands can either be used with / or !.\n",
+)
 
-GreysonG_IMG = "https://telegra.ph/file/83dbae46536c4f88a28b7.jpg"
+SAITAMA_IMG = "https://telegra.ph/file/46e6d9dfcb3eb9eae95d9.jpg"
 
-Greysontut_VID = "https://telegra.ph/file/f0df0d42c1d2a189d8c61.mp4"
-
-SOURCE_STRING = """Oh you want my source . I am built in python 3 , Using the python-telegram-bot library, and am fully open source .
-\nDon't forgot to fork 🍴 and star 🌟 the repo . \n\nCheck my source below 👇"""
-
-SOURCEG_STRING = """Oh you want my source . I am built in python 3 , Using the python-telegram-bot library, and am fully open source .
-\nDon't forgot to fork 🍴 and star 🌟 the repo . \n\nCheck my source below 👇 \n⚙️ Source ⚙️ - [Click here](https://github.com/Kunal-Diwan/GreysonBot)"""
+DONATE_STRING = """Heya, glad to hear you want to donate!
+ You can support the project via [Paypal](ko-fi.com/sawada) or by contacting @Sawada \
+ Supporting isnt always financial! \
+ Those who cannot provide monetary support are welcome to help us develop the bot at @OnePunchDev."""
 
 IMPORTED = {}
 MIGRATEABLE = []
@@ -140,7 +115,7 @@ CHAT_SETTINGS = {}
 USER_SETTINGS = {}
 
 for module_name in ALL_MODULES:
-    imported_module = importlib.import_module("GreysonBot.modules." + module_name)
+    imported_module = importlib.import_module("SaitamaRobot.modules." + module_name)
     if not hasattr(imported_module, "__mod_name__"):
         imported_module.__mod_name__ = imported_module.__name__
 
@@ -154,7 +129,7 @@ for module_name in ALL_MODULES:
 
     # Chats to migrate on chat_migrated events
     if hasattr(imported_module, "__migrate__"):
-        MIGRATEABLE.append(imported_module) 
+        MIGRATEABLE.append(imported_module)
 
     if hasattr(imported_module, "__stats__"):
         STATS.append(imported_module)
@@ -212,10 +187,13 @@ def start(update: Update, context: CallbackContext):
                     update.effective_chat.id,
                     HELPABLE[mod].__help__,
                     InlineKeyboardMarkup(
-                        [[InlineKeyboardButton(text="⬅️ Back", callback_data="help_back")]]
+                        [[InlineKeyboardButton(text="Back", callback_data="help_back")]],
                     ),
                 )
-
+            elif args[0].lower() == "markdownhelp":
+                IMPORTED["extras"].markdown_help_sender(update)
+            elif args[0].lower() == "disasters":
+                IMPORTED["disasters"].send_disasters(update)
             elif args[0].lower().startswith("stngs_"):
                 match = re.match("stngs_(.*)", args[0].lower())
                 chat = dispatcher.bot.getChat(match.group(1))
@@ -229,70 +207,60 @@ def start(update: Update, context: CallbackContext):
                 IMPORTED["rules"].send_rules(update, args[0], from_pm=True)
 
         else:
-            update.effective_message.reply_text(
-                PM_START_TEXT,
-                reply_markup=InlineKeyboardMarkup(buttons),
+            first_name = update.effective_user.first_name
+            update.effective_message.reply_photo(
+                SAITAMA_IMG,
+                PM_START_TEXT.format(
+                    escape_markdown(first_name), escape_markdown(context.bot.first_name),
+                ),
                 parse_mode=ParseMode.MARKDOWN,
-                timeout=60,
+                disable_web_page_preview=True,
+                reply_markup=InlineKeyboardMarkup(
+                    [
+                        [
+                            InlineKeyboardButton(
+                                text="☑️ Add me",
+                                url="t.me/{}?startgroup=true".format(
+                                    context.bot.username,
+                                ),
+                            ),
+                        ],
+                        [
+                            InlineKeyboardButton(
+                                text="🚑 Support",
+                                url=f"https://t.me/{SUPPORT_CHAT}",
+                            ),
+                            InlineKeyboardButton(
+                                text="🔔 Updates",
+                                url="https://t.me/OnePunchUpdates",
+                            ),
+                        ],
+                        [
+                            InlineKeyboardButton(
+                                text="🧾 Getting Started",
+                                url="https://t.me/OnePunchUpdates/29",
+                            ),
+                            InlineKeyboardButton(
+                                text="🗄 Source code",
+                                url="https://github.com/AnimeKaizoku/SaitamaRobot",
+                            ),
+                        ],
+                        [
+                            InlineKeyboardButton(
+                                text="☠️ Kaizoku Network",
+                                url="https://t.me/Kaizoku/4",
+                            ),
+                        ],
+                    ],
+                ),
             )
     else:
-        update.effective_message.reply_photo(
-            GreysonG_IMG,
-            G_START_TEXT,
-            reply_markup=InlineKeyboardMarkup(gbuttons),
-            parse_mode=ParseMode.MARKDOWN,
-            timeout=60,
+        update.effective_message.reply_text(
+            "I'm awake already!\n<b>Haven't slept since:</b> <code>{}</code>".format(
+                uptime,
+            ),
+            parse_mode=ParseMode.HTML,
         )
-
-
-def send_start(update, context):
-    # Try to remove old message
-    try:
-        query = update.callback_query
-        query.message.delete()
-    except BaseException:
-        pass
-
-    chat = update.effective_chat  # type: Optional[Chat]
-    first_name = update.effective_user.first_name
-    text = PM_START_TEXT
-    keyboard = [[InlineKeyboardButton(text="➕ Add me ➕",url="t.me/MrGreysonBot?startgroup=true"),InlineKeyboardButton(text="⚙️ Help ⚙️",callback_data="help_back")]]
-    keyboard += [[InlineKeyboardButton(text="📖 Guide 📖", callback_data="guidemenu_"),InlineKeyboardButton(text="📱Tutorial📱",callback_data="tutmanu_")]]
-
-    update.effective_message.reply_text(
-        PM_START_TEXT,
-        reply_markup=InlineKeyboardMarkup(keyboard),
-        parse_mode=ParseMode.MARKDOWN,
-        timeout=60,
-        disable_web_page_preview=False,
-    )
-
-def error_handler(update, context):
-    """Log the error and send a telegram message to notify the developer."""
-    # Log the error before we do anything else, so we can see it even if something breaks.
-    LOGGER.error(msg="Exception while handling an update:", exc_info=context.error)
-
-    # traceback.format_exception returns the usual python message about an exception, but as a
-    # list of strings rather than a single string, so we have to join them together.
-    tb_list = traceback.format_exception(
-        None, context.error, context.error.__traceback__
-    )
-    tb = "".join(tb_list)
-
-    # Build the message with some markup and additional information about what happened.
-    message = (
-        "An exception was raised while handling an update\n"
-        "<pre>update = {}</pre>\n\n"
-        "<pre>{}</pre>"
-    ).format(
-        html.escape(json.dumps(update.to_dict(), indent=2, ensure_ascii=False)),
-        html.escape(tb),
-    )
-
-    if len(message) >= 4096:
-        message = message[:4096]
-    # Finally, send the message
-    context.bot.send_message(chat_id=OWNER_ID, text=message, parse_mode=ParseMode.HTML)
 
 
 # for test purposes
@@ -340,7 +308,7 @@ def help_button(update, context):
             module = mod_match.group(1)
             text = (
                 "Here is the help for the *{}* module:\n".format(
-                    HELPABLE[module].__mod_name__
+                    HELPABLE[module].__mod_name__,
                 )
                 + HELPABLE[module].__help__
             )
@@ -349,7 +317,7 @@ def help_button(update, context):
                 parse_mode=ParseMode.MARKDOWN,
                 disable_web_page_preview=True,
                 reply_markup=InlineKeyboardMarkup(
-                    [[InlineKeyboardButton(text="Back",callback_data="help_back"),InlineKeyboardButton(text="Home",callback_data="bot_start")]]
+                    [[InlineKeyboardButton(text="Back", callback_data="help_back")]],
                 ),
             )
 
@@ -359,7 +327,7 @@ def help_button(update, context):
                 text=HELP_STRINGS,
                 parse_mode=ParseMode.MARKDOWN,
                 reply_markup=InlineKeyboardMarkup(
-                    paginate_modules(curr_page - 1, HELPABLE, "help")
+                    paginate_modules(curr_page - 1, HELPABLE, "help"),
                 ),
             )
 
@@ -369,7 +337,7 @@ def help_button(update, context):
                 text=HELP_STRINGS,
                 parse_mode=ParseMode.MARKDOWN,
                 reply_markup=InlineKeyboardMarkup(
-                    paginate_modules(next_page + 1, HELPABLE, "help")
+                    paginate_modules(next_page + 1, HELPABLE, "help"),
                 ),
             )
 
@@ -378,7 +346,7 @@ def help_button(update, context):
                 text=HELP_STRINGS,
                 parse_mode=ParseMode.MARKDOWN,
                 reply_markup=InlineKeyboardMarkup(
-                    paginate_modules(0, HELPABLE, "help")
+                    paginate_modules(0, HELPABLE, "help"),
                 ),
             )
 
@@ -389,233 +357,6 @@ def help_button(update, context):
     except BadRequest:
         pass
 
-
-@run_async
-def greyson_about_callback(update, context):
-    query = update.callback_query
-    if query.data == "greyson_":
-        query.message.edit_text(
-            text=""" My name is *Greyson* , I have been written in python3 using mixed libraries. I'm online since 14 June 2021 and is constantly updated! \n
-*Bot Version*: _3.1_ \n
-*Bot Admins* : 
-• @kunaldiwan - bot creator and main developer 
-• @Grizzypal - server manager and developer
-• @Jimmioooo - support director \n
-*And finally special thanks of gratitude to all my users who relied on me for managing their groups, I hope you will always like me; My developers are constantly working to improve me!*""",
-            parse_mode=ParseMode.MARKDOWN,
-            disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup(                   
-                          [[
-                              InlineKeyboardButton(
-                              text="Updates Channel",
-                              url="http://t.me/GraysonNews"),
-                              InlineKeyboardButton(
-                              text="Support Chat",
-                              url="http://t.me/GreysonChats")
-                          ],
-                          [
-                              InlineKeyboardButton(
-                              text="Source",
-                              url="https://github.com/Kunal-Diwan/GreysonBot"),
-                              InlineKeyboardButton(
-                              text="Go Back",
-                              callback_data="guidemenu_")                  
-                          ]])) 
-@run_async
-def Greyson_tut_callback(update, context):
-    query = update.callback_query
-    if query.data == "tutmanu_":
-        query.message.edit_text(
-            text=f"*Welcome to the Greyson configuration tutorial.* "
-            f"\n\n👇 The first thing to do is to *add Greyson to your group*! For doing that, press the under button and select your group, then press *Done* to continue the tutorial. 👇",
-            parse_mode=ParseMode.MARKDOWN,
-            disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup(
-                [
-                    [
-                        InlineKeyboardButton(
-                            text="➕️ Add Grayson to chat!  ➕️", url="t.me/MrGreysonBot?startgroup=true"
-                        )
-                    ],
-                    [InlineKeyboardButton(text="✅ Done ✅", callback_data="tutmanu_howto")],
-                ]
-            ),
-        )
-    elif query.data == "tutmanu_howto":
-        query.message.edit_text(
-            text=f"* Ok, well done! *"
-            f"\nNow for let me work correctly, you need to make me *Admin of your Group*! \n"
-            f"\nTo do that, follow this easy steps:\n"
-            f"▫️ Go to your group \n▫️ Press the Group's name \n▫️ Press Modify \n▫️ Press on Administrator \n▫️ Press Add Administrator \n▫️ Press the Magnifying Glass \n▫️ Search @MrGreysonBot \n▫️ Confirm"
-            f"",
-            parse_mode=ParseMode.MARKDOWN,
-            disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup(
-                [
-                    [
-                        InlineKeyboardButton(
-                            text="💾 Example Video 💾", callback_data="tutmanu_video"
-                        ),
-                    ],
-                    [InlineKeyboardButton(text="✅ Done ✅", callback_data="tutmanu_home")],
-                ]
-            ),
-        )
-    elif query.data == "tutmanu_home":
-        update.effective_message.reply_text(
-            GREYSON_HOME_TEXT,
-            parse_mode=ParseMode.MARKDOWN,
-            disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup(
-                [[InlineKeyboardButton(text="🏡 Home 🏡", callback_data="bot_start")]]
-            ),
-        )
-
-    elif query.data == "tutmanu_video":
-        update.effective_message.reply_animation(
-            Greysontut_VID,
-            reply_markup=InlineKeyboardMarkup(videobuttons),
-            parse_mode=ParseMode.MARKDOWN,
-            timeout=60,
-        )
-
-
-@run_async
-def Support_about_callback(update, context):
-    query = update.callback_query
-    if query.data == "support_":
-        query.message.edit_text(
-            text=""" Hi 👋 I'm *Greyson*
-                 \nCheck my support below 👇\n\nNews channel 📣 - @GraysonNews \nSupport Chat 💬 - @GreysonChats. \n\n*Then also your query has not solved you can contact Main developer 👨‍💻* - @kunaldiwan . """,
-            parse_mode=ParseMode.MARKDOWN,
-            disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup(
-                [
-                 [
-                    InlineKeyboardButton(text="⬅️ Menu", callback_data="support_back")
-                 ]
-                ]
-            ),
-        )
-    elif query.data == "support_back":
-        query.message.edit_text(
-                PM_START_TEXT,
-                reply_markup=InlineKeyboardMarkup(buttons),
-                parse_mode=ParseMode.MARKDOWN,
-                timeout=60,
-                disable_web_page_preview=False,
-        )
-
-@run_async
-def Greyson_guide_callback(update, context):
-    query = update.callback_query
-    if query.data == "guidemenu_":
-        query.message.edit_text(
-            text=f"Hi again! I'am a full-fledged group management bot built to help you manage your group easily ."
-                 f"\n\nI can do lot of stuff, some of them are: \n • Restrict users who flood your chat using my *anti-flood* module."
-                 f"\n • Safeguard your group with the advanced and handy *Antispam system* ."
-                 f"\n • Greet users with media + text and buttons, with proper formatting. \n • Save notes and filters with proper formatting and reply markup ."
-                 f"\n\n*Note:*I need to be promoted with proper admin permissions to fuction properly. \n\nCheck *Setup Guide* to learn on setting up the bot and on *help* to learn more.",
-            parse_mode=ParseMode.MARKDOWN,
-            disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup(
-                [
-                  [
-                    InlineKeyboardButton(text="Setup Guide", callback_data="guidemenu_setguide"),
-                    InlineKeyboardButton(text="T & C", callback_data="guidemenu_tac")
-                  ],
-                 [
-                    InlineKeyboardButton(text="About 🤖", callback_data="greyson_"),
-                    InlineKeyboardButton(text="❔ Help", callback_data="help_back")
-                  ],
-                 [
-                    InlineKeyboardButton(text="🔙 Back", callback_data="guidemenu_back")
-                 ] 
-                ]
-            ),
-        )
-    elif query.data == "guidemenu_back":
-        query.message.edit_text(
-                PM_START_TEXT,
-                reply_markup=InlineKeyboardMarkup(buttons),
-                parse_mode=ParseMode.MARKDOWN,
-                timeout=60, 
-            )
-        
-    elif query.data == "guidemenu_setguide":
-        query.message.edit_text(
-            text=f"* ｢ Setup Guide 」\n*"
-                 f"\nYou can add me to your group by clicking this [link](http://t.me/MrGreysonBot?startgroup=true) and selecting the chat. \nRead *Admin Permissions* and *Anti-spam* for basic info."
-                 f"\n\nRead Detailed Setup Guide to learn about setting up the bot in detail. (Recommended) .\nIf you need help with further instructions feel free to ask in @GreysonChats."
-                 f"",
-            parse_mode=ParseMode.MARKDOWN,
-            disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup([[
-                InlineKeyboardButton(text="Admins Settings", callback_data="guidemenu_permis"),
-                InlineKeyboardButton(text="SpamRefiner", callback_data="guidemenu_spamprot")],
-                [
-                InlineKeyboardButton(text="🔙 Back", callback_data="guidemenu_")]
-                                               ]),
-        )
-    elif query.data == "guidemenu_credit":
-        query.message.edit_text(
-            text=f"*{dispatcher.bot.first_name} is a powerful bot for managing groups with additional features.*"
-                 f"\n\nThanks to Paul for his [Marie Bot](http://github.com/PaulSonOfLars/tgbot) . \n\nBase of [Saitama](https://github.com/AnimeKaizoku/SaitamaRobot)."
-                 f"\n\n{dispatcher.bot.first_name}'s Licensed Under The GNU _(General Public License v3.0)_"
-                 f"\n\nIf any question about {dispatcher.bot.first_name}, \nLet us know at Support Chat.",
-            parse_mode=ParseMode.MARKDOWN,
-            disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="☎️ Support",url="t.me/GreysonChats"),InlineKeyboardButton(text="🔙 Back",callback_data="guidemenu_tac")]]),
-        )
-    elif query.data == "guidemenu_permis":
-        query.message.edit_text(
-            text=f"<b> ｢ Admin Permissions 」</b>"
-                 f"\nTo avoid slowing down, {dispatcher.bot.first_name} caches admin rights for each user. This cache lasts about 10 minutes; this may change in the future. This means that if you promote a user manually (without using the /promote command), {dispatcher.bot.first_name} will only find out ~10 minutes later."
-                 f"\n\nIF you want to update them immediately, you can use the /admincache command,thta'll force {dispatcher.bot.first_name} to check who the admins are again and their permissions"
-                 f"\n\nIf you are getting a message saying:"
-                 f"\n<Code>You must be this chat administrator to perform this action!</code>"
-                 f"\nThis has nothing to do with {dispatcher.bot.first_name}'s rights; this is all about YOUR permissions as an admin. {dispatcher.bot.first_name} respects admin permissions; if you do not have the Ban Users permission as a telegram admin, you won't be able to ban users with {dispatcher.bot.first_name}. Similarly, to change {dispatcher.bot.first_name} settings, you need to have the Change group info permission."
-                 f"\n\nThe message very clearly says that you need these rights - <i>not {dispatcher.bot.first_name}.</i>",
-            parse_mode=ParseMode.HTML,
-            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="❔ Help",callback_data="help_back"),InlineKeyboardButton(text="🔙 Back",callback_data="guidemenu_setguide")]]),
-        )
-    elif query.data == "guidemenu_spamprot":
-        query.message.edit_text(
-            text="* ｢ SpamRefiner Settings 」*"
-                 "\n\n*SpamRefiner :*"
-                 "\nBy enabling this, you can protect your groups free from scammers/spammers."
-                 "\nRun /spamrefiner on in your chat to enable"
-                 "\nAppeal Chat: @GreysonChats"
-                 "\n\n • *Anti-Flood* allows you to keep your chat clean from flooding."
-                 "\n • With the help of *Blacklists* you can blacklist words,sentences and stickers which you don't want to be used by group members."
-                 "\n • By enabling *Reports*, admins get notified when users reports in chat."
-                 "\n • *Locks* allows you to lock/restrict some comman items in telegram world."
-                 "\n • *Warnings* allows to warn users and set auto-warns ."
-                 "\n • *Welcome Mute* helps you prevent spambots or users flooding/spamming your group. Check *Greetings* for more info.",
-            parse_mode=ParseMode.MARKDOWN,
-            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(text="❔ Help",callback_data="help_back"),InlineKeyboardButton(text="🔙 Back",callback_data="guidemenu_setguide")]]),
-        )
-    elif query.data == "guidemenu_tac":
-        query.message.edit_text(
-            text=f"<b> ｢ Terms and Conditions 」</b>\n"
-                 f"\n<i>To use this bot, You need to agree with Terms and Conditions.</i>\n"
-                 f"\n✪ Only your first name, last name (if any) and username (if any) is stored for a convenient communication!"
-                 f"\n✪ No group ID or it's messages are stored, we respect everyone's privacy."
-                 f"\n✪ Messages between Bot and you is only infront of your eyes and there is no because of it."
-                 f"\n✪ If you need to ask anything about this bot, Go @{SUPPORT_CHAT}."
-                 f"\n✪ If you asking nonsense in Support Chat, you will get warned/banned."
-                 f"\n✪ Watch your group, if someone is spamming your group, you can use the report feature of your Telegram Client."
-                 f"\n✪ Sharing NSFW in Support Chat, will reward you GBAN nd reported to Telegram as well."
-                 f"\n\nFor any kind of help, related to this bot, Join @{SUPPORT_CHAT}."
-                 f"\n\n<i>Terms & Conditions might changed anytime</i>\n",
-            parse_mode=ParseMode.HTML,
-            reply_markup=InlineKeyboardMarkup(
-                [
-                  [
-                    InlineKeyboardButton(text="Credits", callback_data="guidemenu_credit"),
-                    InlineKeyboardButton(text="🔙 Back", callback_data="guidemenu_")
-                  ]])
-        )
 
 @run_async
 def get_help(update: Update, context: CallbackContext):
@@ -634,11 +375,11 @@ def get_help(update: Update, context: CallbackContext):
                             InlineKeyboardButton(
                                 text="Help",
                                 url="t.me/{}?start=ghelp_{}".format(
-                                    context.bot.username, module
+                                    context.bot.username, module,
                                 ),
-                            )
-                        ]
-                    ]
+                            ),
+                        ],
+                    ],
                 ),
             )
             return
@@ -650,9 +391,9 @@ def get_help(update: Update, context: CallbackContext):
                         InlineKeyboardButton(
                             text="Help",
                             url="t.me/{}?start=help".format(context.bot.username),
-                        )
-                    ]
-                ]
+                        ),
+                    ],
+                ],
             ),
         )
         return
@@ -661,7 +402,7 @@ def get_help(update: Update, context: CallbackContext):
         module = args[1].lower()
         text = (
             "Here is the available help for the *{}* module:\n".format(
-                HELPABLE[module].__mod_name__
+                HELPABLE[module].__mod_name__,
             )
             + HELPABLE[module].__help__
         )
@@ -669,7 +410,7 @@ def get_help(update: Update, context: CallbackContext):
             chat.id,
             text,
             InlineKeyboardMarkup(
-                [[InlineKeyboardButton(text="🔙 Back", callback_data="help_back")]]
+                [[InlineKeyboardButton(text="Back", callback_data="help_back")]],
             ),
         )
 
@@ -703,10 +444,10 @@ def send_settings(chat_id, user_id, user=False):
             dispatcher.bot.send_message(
                 user_id,
                 text="Which module would you like to check {}'s settings for?".format(
-                    chat_name
+                    chat_name,
                 ),
-                reply_markup=Inline.KeyboardMarkup(
-                    paginate_modules(0, CHAT_SETTINGS, "stngs", chat=chat_id)
+                reply_markup=InlineKeyboardMarkup(
+                    paginate_modules(0, CHAT_SETTINGS, "stngs", chat=chat_id),
                 ),
             )
         else:
@@ -733,7 +474,7 @@ def settings_button(update: Update, context: CallbackContext):
             module = mod_match.group(2)
             chat = bot.get_chat(chat_id)
             text = "*{}* has the following settings for the *{}* module:\n\n".format(
-                escape_markdown(chat.title), CHAT_SETTINGS[module].__mod_name__
+                escape_markdown(chat.title), CHAT_SETTINGS[module].__mod_name__,
             ) + CHAT_SETTINGS[module].__chat_settings__(chat_id, user.id)
             query.message.reply_text(
                 text=text,
@@ -744,9 +485,9 @@ def settings_button(update: Update, context: CallbackContext):
                             InlineKeyboardButton(
                                 text="Back",
                                 callback_data="stngs_back({})".format(chat_id),
-                            )
-                        ]
-                    ]
+                            ),
+                        ],
+                    ],
                 ),
             )
 
@@ -759,8 +500,8 @@ def settings_button(update: Update, context: CallbackContext):
                 "you're interested in.".format(chat.title),
                 reply_markup=InlineKeyboardMarkup(
                     paginate_modules(
-                        curr_page - 1, CHAT_SETTINGS, "stngs", chat=chat_id
-                    )
+                        curr_page - 1, CHAT_SETTINGS, "stngs", chat=chat_id,
+                    ),
                 ),
             )
 
@@ -773,8 +514,8 @@ def settings_button(update: Update, context: CallbackContext):
                 "you're interested in.".format(chat.title),
                 reply_markup=InlineKeyboardMarkup(
                     paginate_modules(
-                        next_page + 1, CHAT_SETTINGS, "stngs", chat=chat_id
-                    )
+                        next_page + 1, CHAT_SETTINGS, "stngs", chat=chat_id,
+                    ),
                 ),
             )
 
@@ -786,7 +527,7 @@ def settings_button(update: Update, context: CallbackContext):
                 "you're interested in.".format(escape_markdown(chat.title)),
                 parse_mode=ParseMode.MARKDOWN,
                 reply_markup=InlineKeyboardMarkup(
-                    paginate_modules(0, CHAT_SETTINGS, "stngs", chat=chat_id)
+                    paginate_modules(0, CHAT_SETTINGS, "stngs", chat=chat_id),
                 ),
             )
 
@@ -820,11 +561,11 @@ def get_settings(update: Update, context: CallbackContext):
                             InlineKeyboardButton(
                                 text="Settings",
                                 url="t.me/{}?start=stngs_{}".format(
-                                    context.bot.username, chat.id
+                                    context.bot.username, chat.id,
                                 ),
-                            )
-                        ]
-                    ]
+                            ),
+                        ],
+                    ],
                 ),
             )
         else:
@@ -833,45 +574,6 @@ def get_settings(update: Update, context: CallbackContext):
     else:
         send_settings(chat.id, user.id, True)
 
-@run_async
-def source(update: Update, context: CallbackContext):
-    user = update.effective_message.from_user
-    chat = update.effective_chat  # type: Optional[Chat]
-    bot = context.bot
-    if chat.type == "private":
-        update.effective_message.reply_text(
-            SOURCE_STRING, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(
-                [
-                  [
-                    InlineKeyboardButton(text="↗️ Source ↗️", url="https://github.com/Kunal-Diwan/GreysonBot")
-                 ] 
-                ]
-            ),
-        )
-
-        if OWNER_ID != 1701601729 and MAINTAINER_LINK:
-            update.effective_message.reply_text(
-                "I am maintained by "
-                "[him]({})".format(MAINTAINER_LINK),
-                parse_mode=ParseMode.MARKDOWN,
-            )
-
-    else:
-        try:
-            bot.send_message(
-                user.id,
-                SOURCEG_STRING,
-                parse_mode=ParseMode.MARKDOWN,
-                disable_web_page_preview=True,
-            )
-
-            update.effective_message.reply_text(
-                "I have PM you about my source!"
-            )
-        except Unauthorized:
-            update.effective_message.reply_text(
-                "Contact me in PM first to get source information."
-            )
 
 @run_async
 def donate(update: Update, context: CallbackContext):
@@ -880,15 +582,15 @@ def donate(update: Update, context: CallbackContext):
     bot = context.bot
     if chat.type == "private":
         update.effective_message.reply_text(
-            DONATE_STRING,
-            parse_mode=ParseMode.MARKDOWN,
-            disable_web_page_preview=True)
+            DONATE_STRING, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True,
+        )
 
-        if OWNER_ID != 1701601729 and DONATION_LINK:
+        if OWNER_ID != 254318997 and DONATION_LINK:
             update.effective_message.reply_text(
                 "You can also donate to the person currently running me "
                 "[here]({})".format(DONATION_LINK),
-                parse_mode=ParseMode.MARKDOWN)
+                parse_mode=ParseMode.MARKDOWN,
+            )
 
     else:
         try:
@@ -896,13 +598,16 @@ def donate(update: Update, context: CallbackContext):
                 user.id,
                 DONATE_STRING,
                 parse_mode=ParseMode.MARKDOWN,
-                disable_web_page_preview=True)
+                disable_web_page_preview=True,
+            )
 
             update.effective_message.reply_text(
-                "I've PM'ed you about donating to my creator!")
+                "I've PM'ed you about donating to my creator!",
+            )
         except Unauthorized:
             update.effective_message.reply_text(
-                "Contact me in PM first to get donation information.")
+                "Contact me in PM first to get donation information.",
+            )
 
 
 def migrate_chats(update: Update, context: CallbackContext):
@@ -928,10 +633,10 @@ def main():
 
     if SUPPORT_CHAT is not None and isinstance(SUPPORT_CHAT, str):
         try:
-            dispatcher.bot.sendMessage(f"@{SUPPORT_CHAT}", "Yes I'm online")
+            dispatcher.bot.sendMessage(f"@{SUPPORT_CHAT}", "I am now online!")
         except Unauthorized:
             LOGGER.warning(
-                "Bot isnt able to send message to support_chat, go and check!"
+                "Bot isnt able to send message to support_chat, go and check!",
             )
         except BadRequest as e:
             LOGGER.warning(e.message)
@@ -941,37 +646,21 @@ def main():
 
     help_handler = CommandHandler("help", get_help)
     help_callback_handler = CallbackQueryHandler(help_button, pattern=r"help_.*")
-    start_callback_handler = CallbackQueryHandler(
-        send_start, pattern=r"bot_start")
-    dispatcher.add_handler(start_callback_handler)
 
     settings_handler = CommandHandler("settings", get_settings)
     settings_callback_handler = CallbackQueryHandler(settings_button, pattern=r"stngs_")
 
-    about_callback_handler = CallbackQueryHandler(greyson_about_callback, pattern=r"greyson_")
-    source_callback_handler = CallbackQueryHandler(Support_about_callback, pattern=r"support_")
-    guide_callback_handler = CallbackQueryHandler(
-        Greyson_guide_callback, pattern=r"guidemenu_"
-    )
-    tut_callback_handler = CallbackQueryHandler(
-        Greyson_tut_callback, pattern=r"tutmanu_"
-    )
-  
-    source_handler = CommandHandler("source", source)
+    donate_handler = CommandHandler("donate", donate)
     migrate_handler = MessageHandler(Filters.status_update.migrate, migrate_chats)
 
     # dispatcher.add_handler(test_handler)
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(help_handler)
-    dispatcher.add_handler(guide_callback_handler)
-    dispatcher.add_handler(tut_callback_handler)
-    dispatcher.add_handler(about_callback_handler)
-    dispatcher.add_handler(source_callback_handler)
     dispatcher.add_handler(settings_handler)
     dispatcher.add_handler(help_callback_handler)
     dispatcher.add_handler(settings_callback_handler)
     dispatcher.add_handler(migrate_handler)
-    dispatcher.add_handler(source_handler)
+    dispatcher.add_handler(donate_handler)
 
     dispatcher.add_error_handler(error_callback)
 
@@ -983,7 +672,6 @@ def main():
             updater.bot.set_webhook(url=URL + TOKEN, certificate=open(CERT_PATH, "rb"))
         else:
             updater.bot.set_webhook(url=URL + TOKEN)
-            client.run_until_disconnected()
 
     else:
         LOGGER.info("Using long polling.")
@@ -1000,5 +688,4 @@ def main():
 if __name__ == "__main__":
     LOGGER.info("Successfully loaded modules: " + str(ALL_MODULES))
     telethn.start(bot_token=TOKEN)
-    pbot.start()
     main()
