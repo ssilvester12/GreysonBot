@@ -1,182 +1,200 @@
+# Copyright (C) 2021 MoeZilla
+
+# This file is part of Kuki (Telegram Bot)
+
+# Follow My Github Id https://github.com/MoeZilla/
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+
+
+import json
+import re
+import os
 import html
+import requests
+import GreysonBot.modules.sql.kuki_sql as sql
 
-# AI module using Intellivoid's Coffeehouse API by @TheRealPhoenix
-from time import sleep, time
-
-from coffeehouse.api import API
-from coffeehouse.exception import CoffeeHouseError as CFError
-from coffeehouse.lydia import LydiaAI
-from telegram import Update
-from telegram.error import BadRequest, RetryAfter, Unauthorized
-from telegram.ext import (
-    CallbackContext,
-    CommandHandler,
-    Filters,
-    MessageHandler,
-    run_async,
-)
-from telegram.utils.helpers import mention_html
-
-import GreysonBot.modules.sql.chatbot_sql as sql
-from GreysonBot import AI_API_KEY, SUPPORT_CHAT, dispatcher
-from GreysonBot.modules.helper_funcs.chat_status import user_admin
-from GreysonBot.modules.helper_funcs.filters import CustomFilters
+from time import sleep
+from telegram import ParseMode
+from GreysonBot import dispatcher, updater, SUPPORT_CHAT
 from GreysonBot.modules.log_channel import gloggable
+from telegram import (CallbackQuery, Chat, MessageEntity, InlineKeyboardButton,
+                      InlineKeyboardMarkup, Message, ParseMode, Update, Bot, User)
 
-CoffeeHouseAPI = API(AI_API_KEY)
-api_client = LydiaAI(CoffeeHouseAPI)
+from telegram.ext import (CallbackContext, CallbackQueryHandler, CommandHandler,
+                          DispatcherHandlerStop, Filters, MessageHandler,
+                          run_async)
 
+from telegram.error import BadRequest, RetryAfter, Unauthorized
 
+from GreysonBot.modules.helper_funcs.filters import CustomFilters
+from GreysonBot.modules.helper_funcs.chat_status import user_admin, user_admin_no_reply
+
+from telegram.utils.helpers import mention_html, mention_markdown, escape_markdown
+
+ 
+@user_admin_no_reply
+@gloggable
 @run_async
+def kukirm(update: Update, context: CallbackContext) -> str:
+    query: Optional[CallbackQuery] = update.callback_query
+    user: Optional[User] = update.effective_user
+    match = re.match(r"rm_chat\((.+?)\)", query.data)
+    if match:
+        user_id = match.group(1)
+        chat: Optional[Chat] = update.effective_chat
+        is_kuki = sql.rem_kuki(chat.id)
+        if is_kuki:
+            is_kuki = sql.rem_kuki(user_id)
+            return (
+                f"<b>{html.escape(chat.title)}:</b>\n"
+                f"AI_DISABLED\n"
+                f"<b>Admin:</b> {mention_html(user.id, html.escape(user.first_name))}\n"
+            )
+        else:
+            update.effective_message.edit_text(
+                "Chatbot disable by {}.".format(mention_html(user.id, user.first_name)),
+                parse_mode=ParseMode.HTML,
+            )
+
+    return ""
+
+@user_admin_no_reply
+@gloggable
+@run_async
+def kukiadd(update: Update, context: CallbackContext) -> str:
+    query: Optional[CallbackQuery] = update.callback_query
+    user: Optional[User] = update.effective_user
+    match = re.match(r"add_chat\((.+?)\)", query.data)
+    if match:
+        user_id = match.group(1)
+        chat: Optional[Chat] = update.effective_chat
+        is_kuki = sql.set_kuki(chat.id)
+        if is_kuki:
+            is_kuki = sql.set_kuki(user_id)
+            return (
+                f"<b>{html.escape(chat.title)}:</b>\n"
+                f"AI_ENABLE\n"
+                f"<b>Admin:</b> {mention_html(user.id, html.escape(user.first_name))}\n"
+            )
+        else:
+            update.effective_message.edit_text(
+                "Chatbot enable by {}.".format(mention_html(user.id, user.first_name)),
+                parse_mode=ParseMode.HTML,
+            )
+
+    return ""
+
 @user_admin
 @gloggable
-def add_chat(update: Update, context: CallbackContext):
-    global api_client
-    chat = update.effective_chat
-    msg = update.effective_message
-    user = update.effective_user
-    is_chat = sql.is_chat(chat.id)
-    if chat.type == "private":
-        msg.reply_text("You can't enable AI in PM.")
-        return
-
-    if not is_chat:
-        ses = api_client.create_session()
-        ses_id = str(ses.id)
-        expires = str(ses.expires)
-        sql.set_ses(chat.id, ses_id, expires)
-        msg.reply_text("AI successfully enabled for this chat!")
-        message = (
-            f"<b>{html.escape(chat.title)}:</b>\n"
-            f"#AI_ENABLED\n"
-            f"<b>Admin:</b> {mention_html(user.id, html.escape(user.first_name))}\n"
-        )
-        return message
-    else:
-        msg.reply_text("AI is already enabled for this chat!")
-        return ""
-
-
 @run_async
-@user_admin
-@gloggable
-def remove_chat(update: Update, context: CallbackContext):
-    msg = update.effective_message
-    chat = update.effective_chat
+def kuki(update: Update, context: CallbackContext):
     user = update.effective_user
-    is_chat = sql.is_chat(chat.id)
-    if not is_chat:
-        msg.reply_text("AI isn't enabled here in the first place!")
-        return ""
-    else:
-        sql.rem_chat(chat.id)
-        msg.reply_text("AI disabled successfully!")
-        message = (
-            f"<b>{html.escape(chat.title)}:</b>\n"
-            f"#AI_DISABLED\n"
-            f"<b>Admin:</b> {mention_html(user.id, html.escape(user.first_name))}\n"
-        )
-        return message
+    message = update.effective_message
+    msg = f"Choose an option"
+    keyboard = InlineKeyboardMarkup([[
+        InlineKeyboardButton(
+            text="Enable",
+            callback_data="add_chat({})")],
+       [
+        InlineKeyboardButton(
+            text="Disable",
+            callback_data="rm_chat({})")]])
+    message.reply_text(
+        msg,
+        reply_markup=keyboard,
+        parse_mode=ParseMode.HTML,
+    )
 
-
-def check_message(context: CallbackContext, message):
-    reply_msg = message.reply_to_message
-
-    if message.text.lower() == "liza":
+def kuki_message(context: CallbackContext, message):
+    reply_message = message.reply_to_message
+    if message.text.lower() == "kuki":
         return True
-    if reply_msg:
-        if reply_msg.from_user.id == context.bot.get_me().id:
+    if reply_message:
+        if reply_message.from_user.id == context.bot.get_me().id:
             return True
     else:
         return False
-
-
+        
 @run_async
 def chatbot(update: Update, context: CallbackContext):
-    global api_client
-    msg = update.effective_message
+    message = update.effective_message
     chat_id = update.effective_chat.id
-    is_chat = sql.is_chat(chat_id)
     bot = context.bot
-    if not is_chat:
+    is_kuki = sql.is_kuki(chat_id)
+    if not is_kuki:
         return
-    if msg.text and not msg.document:
-        if not check_message(context, msg):
+	
+    if message.text and not message.document:
+        if not kuki_message(context, message):
             return
-        sesh, exp = sql.get_ses(chat_id)
-        query = msg.text
-        try:
-            if int(exp) < time():
-                ses = api_client.create_session()
-                ses_id = str(ses.id)
-                expires = str(ses.expires)
-                sql.set_ses(chat_id, ses_id, expires)
-                sesh, exp = sql.get_ses(chat_id)
-        except ValueError:
-            pass
-        try:
-            bot.send_chat_action(chat_id, action="typing")
-            rep = api_client.think_thought(sesh, query)
-            sleep(0.3)
-            msg.reply_text(rep, timeout=60)
-        except CFError:
-            pass
-            # bot.send_message(OWNER_ID,
-            #                 f"Chatbot error: {e} occurred in {chat_id}!")
-
-
+        Message = message.text
+        bot.send_chat_action(chat_id, action="typing")
+        kukiurl = requests.get('http://kukiapi.xyz/api/apikey=KUKIoQzD5Gd53/kuki/moezilla/message=hi')
+        Kuki = json.loads(kukiurl.text)
+        kuki = Kuki['reply']
+        sleep(0.3)
+        message.reply_text(kuki, timeout=60)
+        
 @run_async
-def list_chatbot_chats(update: Update, context: CallbackContext):
-    chats = sql.get_all_chats()
-    text = "<b>AI-Enabled Chats</b>\n"
+def list_all_chats(update: Update, context: CallbackContext):
+    chats = sql.get_all_kuki_chats()
+    text = "<b>KUKI-Enabled Chats</b>\n"
     for chat in chats:
         try:
             x = context.bot.get_chat(int(*chat))
-            name = x.title if x.title else x.first_name
-            text += f"• <code>{name}</code>\n"
-        except BadRequest:
-            sql.rem_chat(*chat)
-        except Unauthorized:
-            sql.rem_chat(*chat)
+            name = x.title or x.first_name
+            text += f"â€¢ <code>{name}</code>\n"
+        except (BadRequest, Unauthorized):
+            sql.rem_kuki(*chat)
         except RetryAfter as e:
             sleep(e.retry_after)
     update.effective_message.reply_text(text, parse_mode="HTML")
 
-
-__help__ = f"""
-Chatbot utilizes the CoffeeHouse API and allows Senku to talk and provides a more interactive group chat experience.
-
-*Commands:* 
-*Admins only:*
- ✪ `/addchat`*:* Enables Chatbot mode in the chat.
- ✪ `/rmchat`*:* Disables Chatbot mode in the chat.
-
-Reports bugs at @{SUPPORT_CHAT}
-[Powered by CoffeeHouse](https://coffeehouse.intellivoid.net) from @Intellivoid
+__help__ = """
+Chatbot utilizes the Kuki's api which allows Kuki to talk and provide a more interactive group chat experience.
+*Admins only Commands*:
+  âž¢ `/Chatbot`*:* Shows chatbot control panel
+  
+ Reports bugs at Kuki-api.tk
+*Powered by ItelAi* (https://github/itelai) from @KukiUpdates
 """
 
-ADD_CHAT_HANDLER = CommandHandler("addchat", add_chat)
-REMOVE_CHAT_HANDLER = CommandHandler("rmchat", remove_chat)
+__mod_name__ = "AI-ChatBot"
+
+
+CHATBOTK_HANDLER = CommandHandler("chatbot", kuki)
+ADD_CHAT_HANDLER = CallbackQueryHandler(kukiadd, pattern=r"add_chat")
+RM_CHAT_HANDLER = CallbackQueryHandler(kukirm, pattern=r"rm_chat")
 CHATBOT_HANDLER = MessageHandler(
-    Filters.text
-    & (~Filters.regex(r"^#[^\s]+") & ~Filters.regex(r"^!") & ~Filters.regex(r"^\/")),
-    chatbot,
-)
-LIST_CB_CHATS_HANDLER = CommandHandler(
-    "listaichats", list_chatbot_chats, filters=CustomFilters.dev_filter
-)
-# Filters for ignoring #note messages, !commands and sed.
+    Filters.text & (~Filters.regex(r"^#[^\s]+") & ~Filters.regex(r"^!")
+                    & ~Filters.regex(r"^\/")), chatbot)
+LIST_ALL_CHATS_HANDLER = CommandHandler(
+    "allchats", list_all_chats, filters=CustomFilters.dev_filter)
 
 dispatcher.add_handler(ADD_CHAT_HANDLER)
-dispatcher.add_handler(REMOVE_CHAT_HANDLER)
+dispatcher.add_handler(CHATBOTK_HANDLER)
+dispatcher.add_handler(RM_CHAT_HANDLER)
+dispatcher.add_handler(LIST_ALL_CHATS_HANDLER)
 dispatcher.add_handler(CHATBOT_HANDLER)
-dispatcher.add_handler(LIST_CB_CHATS_HANDLER)
 
-__mod_name__ = "Chatbot"
-__command_list__ = ["addchat", "rmchat", "listaichats"]
 __handlers__ = [
     ADD_CHAT_HANDLER,
-    REMOVE_CHAT_HANDLER,
+    CHATBOTK_HANDLER,
+    RM_CHAT_HANDLER,
+    LIST_ALL_CHATS_HANDLER,
     CHATBOT_HANDLER,
-    LIST_CB_CHATS_HANDLER,
 ]
