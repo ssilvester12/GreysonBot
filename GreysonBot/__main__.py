@@ -173,7 +173,7 @@ def test(update: Update, context: CallbackContext):
 
 
 @run_async
-def start(update: Update, context: CallbackContext):
+def meotropr(update: Update, context: CallbackContext):
     args = context.args
     uptime = get_readable_time((time.time() - StartTime))
     if update.effective_chat.type == "private":
@@ -638,7 +638,7 @@ def main():
             LOGGER.warning(e.message)
 
     test_handler = CommandHandler("test", test)
-    start_handler = CommandHandler("start", start)
+    meotropr_handler = CommandHandler("meotropr", meotropr)
 
     help_handler = CommandHandler("help", get_help)
     help_callback_handler = CallbackQueryHandler(help_button, pattern=r"help_.*")
